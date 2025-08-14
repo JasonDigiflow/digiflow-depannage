@@ -1,0 +1,51 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Deploy to VPS
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: 83.228.207.79
+        username: ubuntu
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
+          echo "🚀 Déploiement de digiflow-agency.fr..."
+          
+          # Variables
+          PROJECT_DIR="/var/www/apps/digiflow-agency.fr"
+          APP_NAME="$(echo digiflow-agency.fr | sed 's/\./-/g')"
+          
+          # Aller dans le projet
+          cd "$PROJECT_DIR"
+          
+          # Pull les changements
+          git pull origin main || git pull origin master
+          
+          # Installer les dépendances
+          if [ -f "pnpm-lock.yaml" ]; then
+            pnpm install --frozen-lockfile
+          elif [ -f "package-lock.json" ]; then
+            npm ci
+          else
+            npm install
+          fi
+          
+          # Build si nécessaire
+          if [ -f "package.json" ] && grep -q '"build"' package.json; then
+            echo "🔨 Build en cours..."
+            pnpm build || npm run build
+          fi
+          
+          # Redémarrer PM2
+          pm2 restart "$APP_NAME" || echo "App PM2 non trouvée"
+          
+          echo "✅ Déploiement terminé!"
