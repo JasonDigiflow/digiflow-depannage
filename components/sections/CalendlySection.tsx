@@ -6,83 +6,62 @@ import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Button } from "@/components/ui/button"
 import { CalendlyModal } from "@/components/CalendlyModal"
-import { CalendlyEmbed } from "@/components/CalendlyEmbed"
-import { Calendar, ArrowRight, Users, Trophy, Zap, Target } from "lucide-react"
+import { Calendar, ArrowRight, Users, Trophy, Zap, Target, Gift, Flame, CheckCircle2, Star } from "lucide-react"
 
 gsap.registerPlugin(ScrollTrigger)
 
 export function CalendlySection() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
-  const calendarRef = useRef<HTMLDivElement>(null)
+  const [timeLeft, setTimeLeft] = useState({ hours: 48, minutes: 0, seconds: 0 })
 
   useEffect(() => {
-    // Animation du calendrier
-    if (calendarRef.current) {
-      const days = calendarRef.current.querySelectorAll(".calendar-day")
+    // Countdown timer pour créer l'urgence
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev.seconds > 0) {
+          return { ...prev, seconds: prev.seconds - 1 }
+        } else if (prev.minutes > 0) {
+          return { ...prev, minutes: prev.minutes - 1, seconds: 59 }
+        } else if (prev.hours > 0) {
+          return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 }
+        }
+        return prev
+      })
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
+    if (!sectionRef.current) return
+
+    const stats = sectionRef.current.querySelectorAll('.booking-stat')
+    stats.forEach((stat) => {
+      const element = stat as HTMLElement
+      const value = element.dataset.value || '0'
+      const suffix = element.dataset.suffix || ''
       
-      gsap.fromTo(
-        days,
+      gsap.fromTo(element, 
+        { textContent: '0' },
         {
-          opacity: 0,
-          scale: 0.8,
-          y: 20,
-        },
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          duration: 0.5,
-          stagger: 0.02,
-          ease: "back.out(1.7)",
+          textContent: value,
+          duration: 2,
+          ease: "power2.out",
           scrollTrigger: {
-            trigger: calendarRef.current,
+            trigger: element,
             start: "top 80%",
-            toggleActions: "play none none reverse",
+            once: true
           },
+          snap: { textContent: 1 },
+          onUpdate: function() {
+            element.textContent = Math.floor(Number(this.targets()[0].textContent)) + suffix
+          }
         }
       )
-    }
-
-    // Animation des stats
-    const stats = document.querySelectorAll(".booking-stat")
-    stats.forEach((stat) => {
-      const value = stat.getAttribute("data-value") || "0"
-      const suffix = stat.getAttribute("data-suffix") || ""
-      
-      gsap.to(stat, {
-        innerHTML: value + suffix,
-        duration: 2,
-        ease: "power2.out",
-        snap: { innerHTML: 1 },
-        scrollTrigger: {
-          trigger: stat,
-          start: "top 85%",
-          toggleActions: "play none none reverse",
-        },
-      })
     })
   }, [])
 
-  // Générer un calendrier fictif pour l'effet visuel
-  const generateCalendarDays = () => {
-    const days = []
-    const today = new Date().getDate()
-    
-    for (let i = 1; i <= 30; i++) {
-      const isToday = i === today
-      const isAvailable = [5, 8, 12, 15, 19, 22, 26, 29].includes(i)
-      const isBooked = [3, 7, 10, 14, 17, 21, 24].includes(i)
-      
-      days.push({
-        day: i,
-        isToday,
-        isAvailable,
-        isBooked,
-      })
-    }
-    return days
-  }
 
   return (
     <>
@@ -119,7 +98,7 @@ export function CalendlySection() {
                 <span className="text-sm font-semibold">Derniers créneaux disponibles</span>
               </div>
 
-              <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading mb-6">
                 Transformez votre business en{" "}
                 <span className="text-gradient">30 minutes</span>
               </h2>
@@ -160,11 +139,11 @@ export function CalendlySection() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   size="lg" 
-                  className="group shadow-xl"
+                  className="group shadow-xl flex items-center justify-center bg-gradient-to-r from-violet/90 to-orange/90 hover:from-violet hover:to-orange transition-all duration-300 border-2 border-white/20 backdrop-blur-sm transform hover:scale-105"
                   onClick={() => setIsModalOpen(true)}
                 >
-                  Réserver mon créneau gratuit
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span className="font-semibold">Réserver mon créneau gratuit</span>
+                  <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform" />
                 </Button>
                 
                 <div className="flex items-center gap-2 text-sm text-foreground-muted">
@@ -203,76 +182,161 @@ export function CalendlySection() {
               </div>
             </motion.div>
 
-            {/* Calendrier visuel droite */}
+            {/* CTA Section droite */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="glass rounded-premium p-8">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-semibold">Décembre 2024</h3>
-                  <div className="flex items-center gap-4 text-xs">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 bg-violet rounded-full" />
-                      <span className="text-foreground-muted">Disponible</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 bg-orange rounded-full" />
-                      <span className="text-foreground-muted">Réservé</span>
-                    </div>
+              {/* Card principale avec offre */}
+              <div className="relative">
+                {/* Badge "Offre limitée" - Positionné en dehors */}
+                <div className="absolute -top-5 -right-4 z-50">
+                  <div className="bg-gradient-to-r from-orange via-red-500 to-orange text-white px-8 py-3 rotate-12 text-sm font-black shadow-2xl rounded-sm transform hover:scale-110 transition-transform">
+                    <span className="flex items-center gap-1">
+                      <Flame className="w-4 h-4 animate-pulse" />
+                      OFFRE LIMITÉE
+                    </span>
                   </div>
                 </div>
 
-                {/* Grille calendrier */}
-                <div ref={calendarRef} className="grid grid-cols-7 gap-2">
-                  {["L", "M", "M", "J", "V", "S", "D"].map((day, i) => (
-                    <div key={i} className="text-center text-xs text-foreground-muted font-semibold py-2">
-                      {day}
+                {/* Glow effect animé */}
+                <div className="absolute -inset-4 bg-gradient-to-r from-violet via-orange to-violet rounded-premium opacity-30 blur-2xl animate-pulse" />
+                
+                <div className="relative glass rounded-premium p-8 overflow-visible">
+
+                  {/* Timer urgent */}
+                  <div className="text-center mb-6">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-full mb-4">
+                      <Flame className="w-4 h-4 text-red-500 animate-pulse" />
+                      <span className="text-sm font-semibold text-red-500">Plus que {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s</span>
                     </div>
-                  ))}
-                  
-                  {generateCalendarDays().map((day, i) => (
+                  </div>
+
+                  {/* Offre principale */}
+                  <div className="text-center mb-8">
+                    <div className="mb-4">
+                      <Gift className="w-16 h-16 mx-auto text-violet mb-4" />
+                      <h3 className="text-2xl sm:text-3xl font-bold mb-2">
+                        Audit{" "}
+                        <span className="text-gradient">100% OFFERT</span>
+                      </h3>
+                      <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient mb-2">
+                        + 30% DE RÉDUCTION
+                      </div>
+                      <p className="text-lg text-foreground-muted">
+                        Sur votre première prestation
+                      </p>
+                    </div>
+
+                    {/* Valeur de l'offre */}
+                    <div className="inline-flex items-center gap-4 px-6 py-3 bg-gradient-to-r from-violet/10 to-orange/10 rounded-glass mb-6">
+                      <div>
+                        <span className="text-sm text-foreground-muted line-through">Valeur 497€</span>
+                        <div className="text-2xl font-bold text-gradient">GRATUIT</div>
+                      </div>
+                      <div className="w-px h-12 bg-white/20" />
+                      <div>
+                        <span className="text-sm text-foreground-muted">Économisez</span>
+                        <div className="text-2xl font-bold text-orange">897€</div>
+                      </div>
+                    </div>
+
+                    {/* Points inclus */}
+                    <div className="space-y-3 mb-8 text-left">
+                      {[
+                        "Analyse complète de votre présence digitale",
+                        "Audit de vos concurrents directs",
+                        "Plan d'action personnalisé sur 90 jours",
+                        "Estimation du ROI potentiel",
+                        "30 minutes de conseil stratégique"
+                      ].map((item, i) => (
+                        <div key={i} className="flex items-center gap-3">
+                          <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
+                          <span className="text-sm">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* CTA Principal */}
                     <motion.div
-                      key={i}
-                      className={`
-                        calendar-day aspect-square rounded-glass flex items-center justify-center text-sm font-medium
-                        transition-all cursor-pointer
-                        ${day.isToday ? "ring-2 ring-violet" : ""}
-                        ${day.isAvailable ? "bg-gradient-to-br from-violet/20 to-violet/10 hover:from-violet/30 hover:to-violet/20 text-violet" : ""}
-                        ${day.isBooked ? "bg-gradient-to-br from-orange/20 to-orange/10 text-orange opacity-50" : ""}
-                        ${!day.isAvailable && !day.isBooked ? "bg-glass opacity-30" : ""}
-                      `}
-                      whileHover={day.isAvailable ? { scale: 1.1 } : {}}
-                      whileTap={day.isAvailable ? { scale: 0.95 } : {}}
-                      onClick={day.isAvailable ? () => setIsModalOpen(true) : undefined}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="relative"
                     >
-                      {day.day}
+                      <Button
+                        size="lg"
+                        className="w-full text-lg py-7 bg-gradient-to-r from-violet via-purple-500 to-orange hover:from-orange hover:via-red-500 hover:to-violet transition-all duration-500 shadow-2xl group flex items-center justify-center relative overflow-hidden"
+                        onClick={() => setIsModalOpen(true)}
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700" />
+                        <span className="font-bold tracking-wide relative z-10">RÉCLAMER MON OFFRE</span>
+                        <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform flex-shrink-0 relative z-10" />
+                      </Button>
+                      {/* Icône cadeau dans le coin */}
+                      <div className="absolute -bottom-2 -right-2 pointer-events-none">
+                        <div className="p-3 bg-gradient-to-br from-violet to-orange rounded-full shadow-lg animate-bounce">
+                          <Gift className="w-6 h-6 text-white" />
+                        </div>
+                      </div>
                     </motion.div>
-                  ))}
-                </div>
 
-                {/* Message */}
-                <div className="mt-6 p-4 bg-gradient-to-r from-violet/10 to-orange/10 rounded-glass">
-                  <p className="text-sm text-center">
-                    <span className="font-semibold text-violet">8 créneaux</span> disponibles cette semaine
-                  </p>
-                </div>
+                    {/* Garanties */}
+                    <div className="flex items-center justify-center gap-6 mt-6 text-xs text-foreground-muted">
+                      <div className="flex items-center gap-1">
+                        <CheckCircle2 className="w-4 h-4 text-green-500" />
+                        <span>Sans engagement</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <CheckCircle2 className="w-4 h-4 text-green-500" />
+                        <span>Résultats garantis</span>
+                      </div>
+                    </div>
+                  </div>
 
-                {/* Action rapide */}
-                <Button 
-                  className="w-full mt-4"
-                  size="lg"
-                  onClick={() => setIsModalOpen(true)}
-                >
-                  Voir tous les créneaux disponibles
-                </Button>
+                  {/* Nombre de places restantes */}
+                  <div className="mt-6 p-4 bg-orange/10 border border-orange/20 rounded-glass">
+                    <p className="text-center text-sm">
+                      <span className="font-bold text-orange">⚠️ Attention:</span>{" "}
+                      <span className="text-foreground-muted">
+                        Plus que <span className="font-bold text-white">3 audits gratuits</span> disponibles ce mois
+                      </span>
+                    </p>
+                  </div>
+                </div>
               </div>
 
-              {/* Effet de brillance */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-violet to-orange rounded-premium opacity-20 blur-xl" />
+              {/* Témoignage rapide */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                viewport={{ once: true }}
+                className="mt-6 p-4 glass rounded-glass"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0">
+                    <div className="w-10 h-10 bg-gradient-to-br from-violet to-orange rounded-full flex items-center justify-center text-white font-bold">
+                      M
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-1 mb-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-yellow-500 text-yellow-500" />
+                      ))}
+                    </div>
+                    <p className="text-sm text-foreground-muted italic">
+                      "L'audit gratuit nous a permis d'identifier des opportunités insoupçonnées. ROI x4 en 3 mois!"
+                    </p>
+                    <p className="text-xs text-foreground-muted mt-2">
+                      <span className="font-semibold">Marie L.</span> - CEO @TechStartup
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>

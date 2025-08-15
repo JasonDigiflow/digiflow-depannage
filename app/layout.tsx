@@ -81,6 +81,7 @@ export default function RootLayout({
     <html lang="fr" className="dark">
       <body
         className={`${inter.variable} ${spaceGrotesk.variable}`}
+        suppressHydrationWarning
       >
         <Preloader />
         <AnimatedCursor />

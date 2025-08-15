@@ -69,7 +69,7 @@ export function Footer() {
             </Link>
             <p className="text-foreground-muted mb-6 max-w-sm">
               Agence d'acquisition client spécialisée en Google Ads & Meta Ads. 
-              ROI x4 garanti ou remboursé.
+              ROI moyen x4 pour nos clients.
             </p>
 
             {/* Contact info */}

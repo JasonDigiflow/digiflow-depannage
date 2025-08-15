@@ -26,13 +26,13 @@ export function AnimatedCursor() {
   const cursorXSpring = useSpring(cursorX, springConfig)
   const cursorYSpring = useSpring(cursorY, springConfig)
 
-  // Create fireflies
+  // Create fireflies with deterministic values
   const [fireflies] = useState<Firefly[]>(() => 
     Array.from({ length: 5 }, (_, i) => ({
       id: i,
       x: 0,
       y: 0,
-      size: Math.random() * 4 + 2,
+      size: 2 + (i * 0.8), // Deterministic size based on index
       delay: i * 0.1,
       color: i % 2 === 0 ? "#7B61FF" : "#FF8A00"
     }))
@@ -142,8 +142,8 @@ export function AnimatedCursor() {
             top: mousePosition.y,
           }}
           animate={{
-            x: (Math.random() - 0.5) * 100,
-            y: (Math.random() - 0.5) * 100,
+            x: ((firefly.id * 0.3 - 0.5) % 1) * 100, // Deterministic movement based on id
+            y: ((firefly.id * 0.4 - 0.3) % 1) * 100, // Deterministic movement based on id
           }}
           transition={{
             duration: 2 + firefly.delay,

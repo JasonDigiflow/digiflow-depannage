@@ -13,7 +13,6 @@ const navItems = [
   { label: "Accueil", href: "/" },
   {
     label: "Services",
-    href: "/services",
     dropdown: [
       { label: "🎯 Google Ads (SEA)", href: "/services/sea" },
       { label: "📱 Meta Ads (Facebook/Instagram)", href: "/services/sma" },
@@ -26,7 +25,7 @@ const navItems = [
       { label: "⭐ Gestion Google Business", href: "/services/google-business" },
     ],
   },
-  { label: "Réalisations", href: "/work" },
+  { label: "Réalisations", href: "/#cases" },
   { label: "À propos", href: "/about" },
   { label: "Blog", href: "/blog" },
 ]
@@ -134,31 +133,50 @@ export function NavigationPremium() {
                     onMouseEnter={() => item.dropdown && setActiveDropdown(item.label)}
                     onMouseLeave={() => setActiveDropdown(null)}
                   >
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        "px-4 py-2 text-sm font-medium transition-all duration-300 flex items-center gap-1 group relative",
-                        isInverted 
-                          ? "text-gray-700 hover:text-violet" 
-                          : "text-white/80 hover:text-white"
-                      )}
-                    >
-                      <span className="relative">
-                        {item.label}
-                        <motion.div
-                          className={cn(
-                            "absolute -bottom-1 left-0 right-0 h-0.5 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300",
-                            isInverted ? "bg-violet" : "bg-gradient-to-r from-violet to-orange"
-                          )}
-                        />
-                      </span>
-                      {item.dropdown && (
+                    {item.dropdown ? (
+                      <button
+                        className={cn(
+                          "px-4 py-2 text-sm font-medium transition-all duration-300 flex items-center gap-1 group relative",
+                          isInverted 
+                            ? "text-gray-700 hover:text-violet" 
+                            : "text-white/80 hover:text-white"
+                        )}
+                      >
+                        <span className="relative">
+                          {item.label}
+                          <motion.div
+                            className={cn(
+                              "absolute -bottom-1 left-0 right-0 h-0.5 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300",
+                              isInverted ? "bg-violet" : "bg-gradient-to-r from-violet to-orange"
+                            )}
+                          />
+                        </span>
                         <ChevronDown className={cn(
                           "w-4 h-4 transition-transform duration-300",
                           activeDropdown === item.label && "rotate-180"
                         )} />
-                      )}
-                    </Link>
+                      </button>
+                    ) : (
+                      <Link
+                        href={item.href || "#"}
+                        className={cn(
+                          "px-4 py-2 text-sm font-medium transition-all duration-300 flex items-center gap-1 group relative",
+                          isInverted 
+                            ? "text-gray-700 hover:text-violet" 
+                            : "text-white/80 hover:text-white"
+                        )}
+                      >
+                        <span className="relative">
+                          {item.label}
+                          <motion.div
+                            className={cn(
+                              "absolute -bottom-1 left-0 right-0 h-0.5 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300",
+                              isInverted ? "bg-violet" : "bg-gradient-to-r from-violet to-orange"
+                            )}
+                          />
+                        </span>
+                      </Link>
+                    )}
 
                     {/* Dropdown Menu Premium */}
                     <AnimatePresence>
@@ -229,15 +247,9 @@ export function NavigationPremium() {
                         : "bg-gradient-to-r from-violet via-purple-500 to-orange hover:shadow-xl hover:shadow-violet/40"
                     )}
                   >
-                    <motion.div
-                      className="absolute inset-0 bg-white/20"
-                      initial={{ x: "-100%" }}
-                      whileHover={{ x: "100%" }}
-                      transition={{ duration: 0.6 }}
-                    />
                     <span className="relative z-10 flex items-center gap-2">
                       <Sparkles className="w-4 h-4" />
-                      Audit acquisition
+                      Audit offert
                     </span>
                   </Button>
                 </motion.div>
@@ -328,7 +340,7 @@ export function NavigationPremium() {
                     }}
                   >
                     <Sparkles className="w-4 h-4 mr-2" />
-                    Audit acquisition gratuit
+                    Audit offert
                   </Button>
                 </motion.div>
               </div>

@@ -71,7 +71,7 @@ export function CalendlyEmbedSection() {
           viewport={{ once: true }}
           className="relative max-w-4xl mx-auto"
         >
-          <div className="glass rounded-premium p-8">
+          <div className="glass rounded-premium p-8" style={{ position: 'relative', zIndex: 20 }}>
             
             {/* Header inside container */}
             <div className="relative z-10 flex items-center justify-between mb-6">
@@ -92,7 +92,15 @@ export function CalendlyEmbedSection() {
             </div>
 
             {/* Calendly Widget */}
-            <div className="relative bg-white rounded-lg p-4" style={{ isolation: 'isolate' }}>
+            <div 
+              className="relative bg-white rounded-lg p-4" 
+              style={{ 
+                isolation: 'isolate',
+                pointerEvents: 'auto',
+                position: 'relative',
+                zIndex: 10
+              }}
+            >
               <CalendlyInline />
             </div>
 
@@ -125,7 +133,7 @@ export function CalendlyEmbedSection() {
           </div>
 
           {/* Glow effect */}
-          <div className="absolute -inset-4 bg-gradient-to-r from-violet/20 via-purple-500/20 to-orange/20 rounded-premium blur-3xl opacity-30 animate-pulse" />
+          <div className="absolute -inset-4 bg-gradient-to-r from-violet/20 via-purple-500/20 to-orange/20 rounded-premium blur-3xl opacity-30 animate-pulse pointer-events-none" />
         </motion.div>
 
         {/* Bottom CTA */}

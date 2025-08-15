@@ -20,22 +20,35 @@ const draggableElements = [
   { id: 7, label: "Acquire", color: "from-cyan-500/30 to-blue-500/30", icon: Code },
 ]
 
-function DraggableElement({ element, index, constraintRef }: { element: any; index: number; constraintRef: React.RefObject<HTMLDivElement> }) {
+function DraggableElement({ element, index, constraintRef, showAfterPreload }: { element: any; index: number; constraintRef: React.RefObject<HTMLDivElement>; showAfterPreload: boolean }) {
   const dragControls = useDragControls()
   const [isDragging, setIsDragging] = useState(false)
   const Icon = element.icon
 
-  const positions = [
-    { x: -200, y: -150 },
-    { x: 200, y: -100 },
-    { x: -250, y: 50 },
-    { x: 250, y: 100 },
-    { x: -150, y: 200 },
-    { x: 150, y: -200 },
-    { x: 0, y: 150 }
-  ]
+  // Générer des positions aléatoires autour du centre qui évitent le texte
+  const getRandomPosition = () => {
+    // Positions prédéfinies qui évitent le centre où se trouve le texte
+    const safePositions = [
+      { x: -350, y: -200 }, // Haut gauche
+      { x: 350, y: -180 },  // Haut droite
+      { x: -400, y: 0 },    // Gauche
+      { x: 400, y: 20 },    // Droite
+      { x: -300, y: 250 },  // Bas gauche
+      { x: 300, y: 240 },   // Bas droite
+      { x: 0, y: -280 },    // Haut centre
+    ]
+    
+    // Ajouter une variation aléatoire à la position de base
+    const basePosition = safePositions[index] || { x: 0, y: 0 }
+    const variation = 50 // Variation aléatoire en pixels
+    
+    return {
+      x: basePosition.x + (Math.random() - 0.5) * variation,
+      y: basePosition.y + (Math.random() - 0.5) * variation
+    }
+  }
 
-  const position = positions[index] || { x: 0, y: 0 }
+  const [position] = useState(getRandomPosition)
 
   return (
     <motion.div
@@ -49,23 +62,26 @@ function DraggableElement({ element, index, constraintRef }: { element: any; ind
       onDragEnd={() => setIsDragging(false)}
       initial={{ 
         opacity: 0, 
-        scale: 0
+        scale: 0,
+        x: 0,
+        y: 0
       }}
       animate={{ 
-        opacity: 1, 
-        scale: 1,
-        x: position.x,
-        y: position.y
+        opacity: showAfterPreload ? 1 : 0, 
+        scale: showAfterPreload ? 1 : 0,
+        x: showAfterPreload ? position.x : 0,
+        y: showAfterPreload ? position.y : 0
       }}
       transition={{ 
-        delay: index * 0.1,
+        delay: showAfterPreload ? 0.5 + index * 0.15 : 0,
         type: "spring",
-        stiffness: 260,
-        damping: 20
+        stiffness: 100,
+        damping: 15,
+        mass: 1
       }}
       className="absolute cursor-grab active:cursor-grabbing"
       style={{
-        zIndex: isDragging ? 9999 : 30
+        zIndex: isDragging ? 9999 : 40
       }}
     >
       <motion.div
@@ -123,12 +139,40 @@ function DraggableElement({ element, index, constraintRef }: { element: any; ind
 export function HeroSectionPremium() {
   const { openCalendly } = useCalendlyStore()
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [showDraggables, setShowDraggables] = useState(false)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const subtitleRef = useRef<HTMLParagraphElement>(null)
   const ctaRef = useRef<HTMLDivElement>(null)
   const constraintRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // Vérifier si le preload est terminé
+    const checkPreloadStatus = () => {
+      const preloadElement = document.querySelector('.preloader')
+      if (!preloadElement) {
+        // Si pas de preloader ou déjà terminé, montrer les éléments après un délai
+        setTimeout(() => {
+          setShowDraggables(true)
+        }, 1000)
+      } else {
+        // Attendre que le preloader disparaisse
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.type === 'childList') {
+              const preloadElement = document.querySelector('.preloader')
+              if (!preloadElement) {
+                setShowDraggables(true)
+                observer.disconnect()
+              }
+            }
+          })
+        })
+        observer.observe(document.body, { childList: true, subtree: true })
+      }
+    }
+
+    checkPreloadStatus()
+
     // Animation d'entrée avec GSAP
     const tl = gsap.timeline()
 
@@ -213,14 +257,20 @@ export function HeroSectionPremium() {
         />
       </div>
 
-      {/* Éléments draggables */}
+      {/* Éléments draggables - devant le texte mais positionnés pour ne pas l'empiéter */}
       <div 
         ref={constraintRef}
-        className="absolute inset-0 overflow-hidden pointer-events-none"
+        className="absolute inset-0 overflow-hidden pointer-events-none z-30"
       >
         <div className="relative w-full h-full flex items-center justify-center pointer-events-auto">
           {draggableElements.map((element, index) => (
-            <DraggableElement key={element.id} element={element} index={index} constraintRef={constraintRef} />
+            <DraggableElement 
+              key={element.id} 
+              element={element} 
+              index={index} 
+              constraintRef={constraintRef}
+              showAfterPreload={showDraggables}
+            />
           ))}
         </div>
       </div>
@@ -296,7 +346,7 @@ export function HeroSectionPremium() {
           className="text-xl md:text-2xl lg:text-3xl text-white/70 mb-12 max-w-3xl mx-auto leading-relaxed"
         >
           Agence d'acquisition client avec{" "}
-          <span className="text-white font-medium">ROI x4 garanti</span>. 
+          <span className="text-white font-medium">ROI moyen x4</span>. 
           Google Ads, Meta Ads et{" "}
           <span className="bg-gradient-to-r from-violet to-orange bg-clip-text text-transparent font-medium">
             stratégies d'acquisition performantes

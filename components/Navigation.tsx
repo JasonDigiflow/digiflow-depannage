@@ -12,7 +12,6 @@ const navItems = [
   { label: "Accueil", href: "/" },
   {
     label: "Services",
-    href: "/services",
     dropdown: [
       { label: "Sites Web & Landing Pages", href: "/services/creation-site-web" },
       { label: "SEO", href: "/services/seo" },

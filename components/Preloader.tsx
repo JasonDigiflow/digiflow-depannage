@@ -88,26 +88,34 @@ export function Preloader() {
             />
 
             {/* Floating particles */}
-            {typeof window !== 'undefined' && Array.from({ length: 20 }).map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-violet/50 rounded-full"
-                initial={{
-                  x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1920),
-                  y: (typeof window !== 'undefined' ? window.innerHeight : 1080) + 10,
-                }}
-                animate={{
-                  y: -10,
-                  x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1920),
-                }}
-                transition={{
-                  duration: Math.random() * 10 + 10,
-                  repeat: Infinity,
-                  delay: Math.random() * 5,
-                  ease: "linear"
-                }}
-              />
-            ))}
+            {Array.from({ length: 20 }).map((_, i) => {
+              // Utiliser des valeurs déterministes basées sur l'index
+              const randomX1 = (i * 96) % 1920;
+              const randomX2 = ((i * 73) % 1920);
+              const randomDuration = 10 + (i * 0.5);
+              const randomDelay = i * 0.25;
+              
+              return (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 bg-violet/50 rounded-full"
+                  initial={{
+                    x: randomX1,
+                    y: 1090,
+                  }}
+                  animate={{
+                    y: -10,
+                    x: randomX2,
+                  }}
+                  transition={{
+                    duration: randomDuration,
+                    repeat: Infinity,
+                    delay: randomDelay,
+                    ease: "linear"
+                  }}
+                />
+              )
+            })}
           </div>
 
           <div className="relative z-10 w-full max-w-2xl px-8">
