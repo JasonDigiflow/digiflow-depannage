@@ -18,17 +18,17 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
-          echo "🚀 Déploiement de digiflow-agency.fr..."
+          echo "🚀 Déploiement de ${{ secrets.DOMAIN }}..."
           
-          # Variables
-          PROJECT_DIR="/var/www/apps/digiflow-agency.fr"
-          APP_NAME="$(echo digiflow-agency.fr | sed 's/\./-/g')"
+          PROJECT_DIR="/var/www/apps/${{ secrets.DOMAIN }}"
+          APP_NAME="$(echo ${{ secrets.DOMAIN }} | sed 's/\./-/g')"
           
-          # Aller dans le projet
           cd "$PROJECT_DIR"
           
-          # Pull les changements
-          git pull origin main || git pull origin master
+          # TOUJOURS sauvegarder et forcer la mise à jour
+          git stash push -m "auto-deploy-$(date +%Y%m%d-%H%M%S)" --include-untracked
+          git fetch origin
+          git reset --hard origin/main || git reset --hard origin/master
           
           # Installer les dépendances
           if [ -f "pnpm-lock.yaml" ]; then
@@ -40,12 +40,11 @@ jobs:
           fi
           
           # Build si nécessaire
-          if [ -f "package.json" ] && grep -q '"build"' package.json; then
-            echo "🔨 Build en cours..."
+          if grep -q '"build"' package.json; then
             pnpm build || npm run build
           fi
           
           # Redémarrer PM2
-          pm2 restart "$APP_NAME" || echo "App PM2 non trouvée"
+          pm2 restart "$APP_NAME" || echo "App non trouvée"
           
           echo "✅ Déploiement terminé!"
