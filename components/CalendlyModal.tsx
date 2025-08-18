@@ -23,7 +23,7 @@ export function CalendlyModal({ isOpen, onClose }: CalendlyModalProps) {
 
   return (
     <PopupModal
-      url="https://calendly.com/jason-digiflow-agency/30min"
+      url="https://calendly.com/alexandre-digiflow-agency/30min"
       onModalClose={onClose}
       open={isOpen}
       rootElement={rootElement}

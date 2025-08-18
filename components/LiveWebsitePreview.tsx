@@ -36,9 +36,16 @@ export function LiveWebsitePreview({
 
     // 1. Essayer l'iframe direct pour tous les sites
     if (previewMethod === 'iframe') {
-      // Be-Hype, L'Italien et Faseya acceptent les iframes
-      if (url.includes('litalien') || url.includes('faseya') || url.includes('be-hype')) {
+      // L'Italien et Faseya acceptent les iframes directement
+      if (url.includes('litalien') || url.includes('faseya')) {
         setPreviewUrl(url)
+        setLoading(false)
+        return
+      }
+      
+      // Be-Hype nécessite notre proxy pour contourner les restrictions
+      if (url.includes('be-hype')) {
+        setPreviewUrl('/api/behype-live')
         setLoading(false)
         return
       }
@@ -117,7 +124,7 @@ export function LiveWebsitePreview({
 
       {!loading && !error && (
         <>
-          {/* Méthode 1: Iframe direct pour L'Italien, Faseya et Be-Hype */}
+          {/* Méthode 1: Iframe direct pour L'Italien, Faseya et Be-Hype (via proxy) */}
           {previewMethod === 'iframe' && (url.includes('litalien') || url.includes('faseya') || url.includes('be-hype')) && previewUrl && (
             <iframe
               key={refreshKey}

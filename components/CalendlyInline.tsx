@@ -32,7 +32,7 @@ export function CalendlyInline() {
       }}
     >
       <InlineWidget 
-        url="https://calendly.com/jason-digiflow-agency/30min"
+        url="https://calendly.com/alexandre-digiflow-agency/30min"
         styles={{
           height: "650px", // Increased height for better usability
           width: "100%",
