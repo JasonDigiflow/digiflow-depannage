@@ -34,18 +34,10 @@ export function LiveWebsitePreview({
     setLoading(true)
     setError(false)
 
-    // Pour Be-Hype, utiliser directement thum.io qui fonctionne bien
-    if (url.includes('be-hype')) {
-      setPreviewMethod('screenshot')
-      // Thum.io est gratuit et fonctionne bien pour les captures
-      setPreviewUrl(`https://image.thum.io/get/width/1920/crop/1080/noanimate/${url}`)
-      setLoading(false)
-      return
-    }
-
-    // 1. Essayer l'iframe direct pour L'Italien et Faseya (qui l'acceptent)
+    // 1. Essayer l'iframe direct pour tous les sites
     if (previewMethod === 'iframe') {
-      if (url.includes('litalien') || url.includes('faseya')) {
+      // Be-Hype, L'Italien et Faseya acceptent les iframes
+      if (url.includes('litalien') || url.includes('faseya') || url.includes('be-hype')) {
         setPreviewUrl(url)
         setLoading(false)
         return
@@ -125,8 +117,8 @@ export function LiveWebsitePreview({
 
       {!loading && !error && (
         <>
-          {/* Méthode 1: Iframe direct pour L'Italien et Faseya */}
-          {previewMethod === 'iframe' && (url.includes('litalien') || url.includes('faseya')) && previewUrl && (
+          {/* Méthode 1: Iframe direct pour L'Italien, Faseya et Be-Hype */}
+          {previewMethod === 'iframe' && (url.includes('litalien') || url.includes('faseya') || url.includes('be-hype')) && previewUrl && (
             <iframe
               key={refreshKey}
               src={previewUrl}
@@ -141,37 +133,7 @@ export function LiveWebsitePreview({
             />
           )}
 
-          {/* Méthode 2: Screenshot pour Be-Hype */}
-          {previewMethod === 'screenshot' && url.includes('be-hype') && previewUrl && (
-            <div className="relative w-full h-full">
-              <img
-                key={refreshKey}
-                src={previewUrl}
-                alt={title}
-                className="w-full h-full object-cover object-top"
-                onError={() => {
-                  // Si l'échec, essayer un autre service
-                  const alternativeUrl = `https://shot.screenshotapi.net/screenshot?token=TBPJKP6-Z4RMHKB-HNJ6FGC-1TNVFVS&url=${encodeURIComponent(url)}&width=1920&height=1080&output=image&file_type=png&wait_for_event=load`
-                  setPreviewUrl(alternativeUrl)
-                }}
-              />
-              
-              {/* Message d'information */}
-              <div className="absolute bottom-4 left-4 right-4">
-                <div className="bg-black/80 backdrop-blur-sm rounded-lg p-3 text-white text-sm">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Globe className="w-4 h-4 text-orange" />
-                    <span className="font-medium">Aperçu en temps réel</span>
-                  </div>
-                  <p className="text-xs text-white/70">
-                    Capture actualisée du site Be-Hype. Cliquez pour visiter le site complet.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Méthode 3: Proxy frame pour autres sites */}
+          {/* Méthode 2: Proxy frame pour autres sites */}
           {previewMethod === 'proxy' && previewUrl && !url.includes('litalien') && !url.includes('faseya') && !url.includes('be-hype') && (
             <iframe
               key={refreshKey}
@@ -186,7 +148,7 @@ export function LiveWebsitePreview({
             />
           )}
 
-          {/* Méthode 4: Screenshot comme fallback */}
+          {/* Méthode 3: Screenshot comme fallback */}
           {previewMethod === 'screenshot' && previewUrl && (
             <div className="relative w-full h-full">
               <img
@@ -264,7 +226,7 @@ export function LiveWebsitePreview({
 
       {/* Badges d'état */}
       <div className="absolute top-2 right-2 flex items-center gap-2">
-        {previewMethod === 'iframe' && (url.includes('litalien') || url.includes('sudcouleur')) && (
+        {previewMethod === 'iframe' && (url.includes('litalien') || url.includes('faseya') || url.includes('be-hype')) && (
           <div className="px-2 py-1 bg-green-500/90 text-white text-xs rounded flex items-center gap-1">
             <Zap className="w-3 h-3" />
             Live
@@ -274,12 +236,6 @@ export function LiveWebsitePreview({
           <div className="px-2 py-1 bg-blue-500/90 text-white text-xs rounded flex items-center gap-1">
             <Globe className="w-3 h-3" />
             Proxy
-          </div>
-        )}
-        {previewMethod === 'screenshot' && url.includes('be-hype') && (
-          <div className="px-2 py-1 bg-orange-500/90 text-white text-xs rounded flex items-center gap-1">
-            <Camera className="w-3 h-3" />
-            Live
           </div>
         )}
         {previewMethod === 'screenshot' && (
