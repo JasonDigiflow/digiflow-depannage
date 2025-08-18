@@ -198,9 +198,18 @@ export default function ColdmailPage() {
   const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0])
 
   useEffect(() => {
-    // Counter animation
-    const interval = setInterval(() => {
-      setEmailsSent(prev => prev < 10000 ? prev + 137 : 0)
+    // Counter animation - s'arrêter sur un nombre aléatoire entre 5000 et 9999
+    const targetNumber = Math.floor(Math.random() * 5000) + 5000
+    let interval: NodeJS.Timeout
+    interval = setInterval(() => {
+      setEmailsSent(prev => {
+        if (prev < targetNumber) {
+          return Math.min(prev + 137, targetNumber)
+        } else {
+          clearInterval(interval)
+          return targetNumber
+        }
+      })
     }, 50)
     return () => clearInterval(interval)
   }, [])

@@ -71,6 +71,66 @@ const testimonials = [
     rating: 5,
     highlight: "45 leads/mois",
   },
+  {
+    id: 7,
+    name: "Laurent Dupont",
+    role: "CMO",
+    company: "FinTech Solutions",
+    avatar: "/placeholder.svg",
+    content: "Des résultats concrets dès le premier mois ! Notre CAC a été divisé par 3 et nous générons 200 leads qualifiés par jour. DIGIFLOW est notre partenaire de croissance.",
+    rating: 5,
+    highlight: "CAC ÷3",
+  },
+  {
+    id: 8,
+    name: "Caroline Moreau",
+    role: "Directrice",
+    company: "Mode & Style",
+    avatar: "/placeholder.svg",
+    content: "Le shooting photo a complètement transformé notre image. +45% de conversions sur notre e-commerce. Les visuels sont magnifiques et l'équipe très professionnelle.",
+    rating: 5,
+    highlight: "+45% Conv.",
+  },
+  {
+    id: 9,
+    name: "Nicolas Bernard",
+    role: "Fondateur",
+    company: "SaaS Innovate",
+    avatar: "/placeholder.svg",
+    content: "Le cold emailing nous a permis de signer 12 clients grands comptes en 2 mois. Leur méthode est redoutable et les templates fournis convertissent à merveille.",
+    rating: 5,
+    highlight: "12 clients B2B",
+  },
+  {
+    id: 10,
+    name: "Valérie Petit",
+    role: "CEO",
+    company: "Wellness Center",
+    avatar: "/placeholder.svg",
+    content: "Grâce à l'influence marketing, nous avons touché 2M de personnes en 1 mois. Les retombées sont énormes avec +300% de notoriété et des ventes qui explosent.",
+    rating: 5,
+    highlight: "2M reach",
+  },
+  {
+    id: 11,
+    name: "Marc Fontaine",
+    role: "VP Sales",
+    company: "Tech Industries",
+    avatar: "/placeholder.svg",
+    content: "L'automation marketing a changé la donne. Nos équipes gagnent 15h par semaine et le taux de conversion des leads a doublé. ROI mesuré à 850% sur 6 mois.",
+    rating: 5,
+    highlight: "ROI 850%",
+  },
+  {
+    id: 12,
+    name: "Isabelle Leroy",
+    role: "Marketing Manager",
+    company: "Luxury Brand",
+    avatar: "/placeholder.svg",
+    content: "DIGIFLOW comprend notre marché. Les campagnes Google Ads sont chirurgicales avec un ROAS de 7.2x. Nous avons dépassé tous nos objectifs annuels en 8 mois.",
+    rating: 5,
+    highlight: "ROAS 7.2x",
+  },
 ]
 
 export function TestimonialsSection() {
@@ -120,10 +180,10 @@ export function TestimonialsSection() {
       )
     })
 
-    // Auto-scroll horizontal sur desktop
+    // Auto-scroll horizontal sur desktop - répéter pour éviter le vide
     if (window.innerWidth > 768) {
       gsap.to(carouselRef.current, {
-        x: "-50%",
+        x: "-33%", // Réduit pour éviter le vide avec plus d'avis
         ease: "none",
         scrollTrigger: {
           trigger: carouselRef.current,
@@ -174,7 +234,7 @@ export function TestimonialsSection() {
         {/* Testimonials grid */}
         <div 
           ref={carouselRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
         >
           {testimonials.map((testimonial) => (
             <motion.div

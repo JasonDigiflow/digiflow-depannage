@@ -224,9 +224,17 @@ export default function SEOPage() {
   const rotate = useTransform(scrollYProgress, [0, 1], [0, 360])
 
   useEffect(() => {
-    // Animate SERP position
-    const interval = setInterval(() => {
-      setSerpPosition(prev => prev > 1 ? prev - 1 : 10)
+    // Animate SERP position jusqu'à #1 puis arrêter
+    let interval: NodeJS.Timeout
+    interval = setInterval(() => {
+      setSerpPosition(prev => {
+        if (prev > 1) {
+          return prev - 1
+        } else {
+          clearInterval(interval)
+          return 1
+        }
+      })
     }, 500)
     return () => clearInterval(interval)
   }, [])

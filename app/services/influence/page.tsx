@@ -204,8 +204,18 @@ export default function InfluencePage() {
   const [followersCount, setFollowersCount] = useState(0)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setFollowersCount(prev => prev < 1000000 ? prev + 12345 : 0)
+    // Animation s'arrête à 5000+
+    const targetNumber = 5000
+    let interval: NodeJS.Timeout
+    interval = setInterval(() => {
+      setFollowersCount(prev => {
+        if (prev < targetNumber) {
+          return Math.min(prev + 123, targetNumber)
+        } else {
+          clearInterval(interval)
+          return targetNumber
+        }
+      })
     }, 50)
     return () => clearInterval(interval)
   }, [])

@@ -239,10 +239,37 @@ export default function ShootingPage() {
   const rotate = useTransform(scrollYProgress, [0, 1], [0, 360])
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setPhotosCount(prev => prev < 9999 ? prev + 37 : 0)
+    // Animation jusqu'à 5000+ puis incrémentation aléatoire
+    let interval: NodeJS.Timeout
+    let incrementInterval: NodeJS.Timeout
+    
+    // D'abord animer jusqu'à 5000
+    interval = setInterval(() => {
+      setPhotosCount(prev => {
+        if (prev < 5000) {
+          return Math.min(prev + 137, 5000)
+        } else {
+          clearInterval(interval)
+          // Puis incrémenter de +1 toutes les 0.5 à 10 secondes
+          const startIncrement = () => {
+            incrementInterval = setInterval(() => {
+              setPhotosCount(prev => prev + 1)
+              // Redéfinir l'intervalle avec un nouveau délai aléatoire
+              clearInterval(incrementInterval)
+              const nextDelay = Math.random() * 9500 + 500 // Entre 500ms et 10000ms
+              setTimeout(startIncrement, nextDelay)
+            }, Math.random() * 9500 + 500)
+          }
+          startIncrement()
+          return 5000
+        }
+      })
     }, 50)
-    return () => clearInterval(interval)
+    
+    return () => {
+      clearInterval(interval)
+      clearInterval(incrementInterval)
+    }
   }, [])
 
   return (

@@ -140,12 +140,40 @@ export function HeroSectionPremium() {
   const { openCalendly } = useCalendlyStore()
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [showDraggables, setShowDraggables] = useState(false)
+  const [availableProjects, setAvailableProjects] = useState(2)
+  const [nextMonth, setNextMonth] = useState('')
+  const [nextYear, setNextYear] = useState(2025)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const subtitleRef = useRef<HTMLParagraphElement>(null)
   const ctaRef = useRef<HTMLDivElement>(null)
   const constraintRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // Générer nombre aléatoire de projets entre 1 et 4
+    setAvailableProjects(Math.floor(Math.random() * 4) + 1)
+    
+    // Calculer le mois suivant si on est après le 15
+    const now = new Date()
+    const currentDay = now.getDate()
+    const currentMonth = now.getMonth()
+    const currentYear = now.getFullYear()
+    
+    let targetMonth = currentMonth
+    let targetYear = currentYear
+    
+    if (currentDay >= 15) {
+      targetMonth = currentMonth + 1
+      if (targetMonth > 11) {
+        targetMonth = 0
+        targetYear = currentYear + 1
+      }
+    }
+    
+    const months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 
+                    'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
+    setNextMonth(months[targetMonth])
+    setNextYear(targetYear)
+    
     // Vérifier si le preload est terminé
     const checkPreloadStatus = () => {
       const preloadElement = document.querySelector('.preloader')
@@ -291,7 +319,7 @@ export function HeroSectionPremium() {
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
                 <span className="text-sm font-medium bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                  🔥 2 projets disponibles pour Septembre 2025
+                  🔥 {availableProjects} projet{availableProjects > 1 ? 's' : ''} disponible{availableProjects > 1 ? 's' : ''} pour {nextMonth} {nextYear}
                 </span>
                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
               </div>

@@ -14,8 +14,12 @@ export function CalendlySection() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
   const [timeLeft, setTimeLeft] = useState({ hours: 48, minutes: 0, seconds: 0 })
+  const [remainingAudits, setRemainingAudits] = useState(3)
 
   useEffect(() => {
+    // Générer nombre aléatoire d'audits restants entre 1 et 5
+    setRemainingAudits(Math.floor(Math.random() * 5) + 1)
+    
     // Countdown timer pour créer l'urgence
     const timer = setInterval(() => {
       setTimeLeft(prev => {
@@ -301,7 +305,7 @@ export function CalendlySection() {
                     <p className="text-center text-sm">
                       <span className="font-bold text-orange">⚠️ Attention:</span>{" "}
                       <span className="text-foreground-muted">
-                        Plus que <span className="font-bold text-white">3 audits gratuits</span> disponibles ce mois
+                        Plus que <span className="font-bold text-white">{remainingAudits} audit{remainingAudits > 1 ? 's' : ''} gratuit{remainingAudits > 1 ? 's' : ''}</span> disponible{remainingAudits > 1 ? 's' : ''} ce mois
                       </span>
                     </p>
                   </div>
