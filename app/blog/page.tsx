@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { NavigationPremium } from "@/components/NavigationPremium"
 import { Footer } from "@/components/Footer"
+import { BlogImageGenerator } from "@/components/BlogImageGenerator"
 import Link from "next/link"
 import Image from "next/image"
 import { 
@@ -270,9 +271,12 @@ export default function BlogPage() {
                   className="group cursor-pointer"
                 >
                   <Link href={`/blog/${article.id}`}>
-                    <div className="relative aspect-video bg-gradient-to-br from-violet-600 to-purple-600 rounded-2xl overflow-hidden mb-6">
-                      <div className="absolute inset-0 bg-black/20" />
-                      <div className="absolute top-4 left-4 px-3 py-1 bg-violet-600 text-white text-xs font-medium rounded-full">
+                    <div className="relative aspect-video rounded-2xl overflow-hidden mb-6">
+                      <BlogImageGenerator 
+                        title={article.title}
+                        category={article.category}
+                      />
+                      <div className="absolute top-4 left-4 px-3 py-1 bg-violet-600 text-white text-xs font-medium rounded-full z-20">
                         À la une
                       </div>
                     </div>
@@ -327,12 +331,11 @@ export default function BlogPage() {
                 className="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all"
               >
                 <Link href={`/blog/${article.id}`}>
-                  <div className="relative aspect-video bg-gradient-to-br from-gray-600 to-gray-800">
-                    <div className="absolute bottom-4 left-4">
-                      <span className="px-3 py-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium rounded-full">
-                        {article.category}
-                      </span>
-                    </div>
+                  <div className="relative aspect-video">
+                    <BlogImageGenerator 
+                      title={article.title}
+                      category={article.category}
+                    />
                   </div>
                   
                   <div className="p-6">

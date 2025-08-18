@@ -60,9 +60,9 @@ const projects: Project[] = [
     description: 'Plateforme de mise en relation entre établissements et créateurs de contenu',
     technologies: ['Next.js', 'Stripe', 'Firebase', 'Framer Motion'],
     stats: {
-      visitors: '+200 leads/mois',
-      conversion: '+600%',
-      launch: '2024'
+      visitors: '200 leads/mois',
+      conversion: '+500% MRR',
+      launch: '6 mois'
     },
     color: {
       primary: '#000000',
@@ -441,7 +441,7 @@ const ProjectShowcase = () => {
                   <div className="text-center">
                     <Users className="w-8 h-8 text-violet mb-2 mx-auto" />
                     <div className="text-2xl font-bold text-white">{currentProject.stats.visitors}</div>
-                    <div className="text-sm text-foreground-muted">Visiteurs</div>
+                    <div className="text-sm text-foreground-muted">{currentProject.id === 'be-hype' ? 'Générés' : 'Visiteurs'}</div>
                   </div>
                   <div className="text-center">
                     <TrendingUp className="w-8 h-8 text-orange mb-2 mx-auto" />
@@ -451,7 +451,7 @@ const ProjectShowcase = () => {
                   <div className="text-center">
                     <Calendar className="w-8 h-8 text-violet mb-2 mx-auto" />
                     <div className="text-2xl font-bold text-white">{currentProject.stats.launch}</div>
-                    <div className="text-sm text-foreground-muted">Lancement</div>
+                    <div className="text-sm text-foreground-muted">{currentProject.id === 'be-hype' ? 'Résultats en' : 'Lancement'}</div>
                   </div>
                 </div>
               </div>

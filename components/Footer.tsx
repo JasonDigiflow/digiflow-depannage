@@ -82,15 +82,15 @@ export function Footer() {
                 <span className="text-sm">contact@digiflow-agency.fr</span>
               </a>
               <a 
-                href="tel:+33600000000" 
+                href="tel:+33648105056" 
                 className="flex items-center gap-2 text-foreground-muted hover:text-violet transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                <span className="text-sm">06 00 00 00 00</span>
+                <span className="text-sm">06 48 10 50 56</span>
               </a>
-              <div className="flex items-center gap-2 text-foreground-muted">
-                <MapPin className="w-4 h-4" />
-                <span className="text-sm">Marseille, France</span>
+              <div className="flex items-start gap-2 text-foreground-muted">
+                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                <span className="text-sm">6 Allée des banquiers, 13290 Aix-en-Provence</span>
               </div>
             </div>
 
@@ -202,7 +202,7 @@ export function Footer() {
               © 2024 DIGIFLOW. Tous droits réservés.
             </p>
             <div className="flex items-center gap-4 text-sm text-foreground-muted">
-              <span>Fait avec passion à Marseille</span>
+              <span>Fait avec passion à Aix-en-Provence</span>
               <span className="text-violet">🚀</span>
             </div>
           </div>

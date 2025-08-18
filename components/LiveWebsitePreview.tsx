@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { ExternalLink, Globe, RefreshCw, AlertCircle, Zap } from "lucide-react"
+import { ExternalLink, Globe, RefreshCw, AlertCircle, Zap, Camera } from "lucide-react"
 
 interface LiveWebsitePreviewProps {
   url: string
@@ -34,18 +34,18 @@ export function LiveWebsitePreview({
     setLoading(true)
     setError(false)
 
-    // Pour Be-Hype, utiliser directement le screenshot
-    if (url.includes('be-hype')) {
-      // Utiliser directement une capture ou le composant personnalisé
-      setPreviewMethod('custom')
-      setLoading(false)
-      return
-    }
-
-    // 1. Essayer l'iframe direct pour L'Italien et Faseya (qui l'acceptent)
+    // 1. Essayer l'iframe direct pour tous les sites
     if (previewMethod === 'iframe') {
+      // L'Italien et Faseya acceptent les iframes directement
       if (url.includes('litalien') || url.includes('faseya')) {
         setPreviewUrl(url)
+        setLoading(false)
+        return
+      }
+      
+      // Be-Hype nécessite notre proxy pour contourner les restrictions
+      if (url.includes('be-hype')) {
+        setPreviewUrl('/api/behype-live')
         setLoading(false)
         return
       }
@@ -124,8 +124,8 @@ export function LiveWebsitePreview({
 
       {!loading && !error && (
         <>
-          {/* Méthode 1: Iframe direct pour L'Italien et Faseya */}
-          {previewMethod === 'iframe' && (url.includes('litalien') || url.includes('faseya')) && previewUrl && (
+          {/* Méthode 1: Iframe direct pour L'Italien, Faseya et Be-Hype (via proxy) */}
+          {previewMethod === 'iframe' && (url.includes('litalien') || url.includes('faseya') || url.includes('be-hype')) && previewUrl && (
             <iframe
               key={refreshKey}
               src={previewUrl}
@@ -140,57 +140,7 @@ export function LiveWebsitePreview({
             />
           )}
 
-          {/* Méthode 2: Custom preview pour Be-Hype */}
-          {previewMethod === 'custom' && url.includes('be-hype') && (
-            <div className="w-full h-full bg-black text-white overflow-hidden">
-              <div className="p-6 border-b border-gray-800">
-                <div className="flex justify-between items-center">
-                  <div className="text-3xl font-bold tracking-wider">BE-HYPE</div>
-                  <div className="flex gap-6 text-gray-400">
-                    <span className="hover:text-white cursor-pointer">Influenceurs</span>
-                    <span className="hover:text-white cursor-pointer">Établissements</span>
-                    <span className="hover:text-white cursor-pointer">Analytics</span>
-                  </div>
-                </div>
-              </div>
-              <div className="p-12">
-                <h1 className="text-6xl font-bold mb-6">
-                  CONNECT<br/>
-                  <span className="text-orange-500">CREATORS</span><br/>
-                  WITH BRANDS
-                </h1>
-                <p className="text-xl text-gray-400 mb-8 max-w-2xl">
-                  La plateforme qui révolutionne la mise en relation entre établissements et créateurs de contenu.
-                </p>
-                <div className="flex gap-4">
-                  <button className="px-8 py-3 bg-orange-500 text-black font-bold rounded-lg">
-                    CRÉER MON COMPTE
-                  </button>
-                  <button className="px-8 py-3 border border-white rounded-lg">
-                    DÉCOUVRIR
-                  </button>
-                </div>
-              </div>
-              <div className="absolute bottom-8 left-8 right-8">
-                <div className="grid grid-cols-3 gap-6">
-                  <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl p-4 text-center">
-                    <div className="text-2xl font-bold text-orange-500">3000+</div>
-                    <div className="text-sm text-gray-400">Influenceurs</div>
-                  </div>
-                  <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl p-4 text-center">
-                    <div className="text-2xl font-bold text-orange-500">500+</div>
-                    <div className="text-sm text-gray-400">Établissements</div>
-                  </div>
-                  <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl p-4 text-center">
-                    <div className="text-2xl font-bold text-orange-500">26K€</div>
-                    <div className="text-sm text-gray-400">MRR</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Méthode 3: Proxy frame pour autres sites */}
+          {/* Méthode 2: Proxy frame pour autres sites */}
           {previewMethod === 'proxy' && previewUrl && !url.includes('litalien') && !url.includes('faseya') && !url.includes('be-hype') && (
             <iframe
               key={refreshKey}
@@ -205,7 +155,7 @@ export function LiveWebsitePreview({
             />
           )}
 
-          {/* Méthode 4: Screenshot comme fallback */}
+          {/* Méthode 3: Screenshot comme fallback */}
           {previewMethod === 'screenshot' && previewUrl && (
             <div className="relative w-full h-full">
               <img
@@ -283,7 +233,7 @@ export function LiveWebsitePreview({
 
       {/* Badges d'état */}
       <div className="absolute top-2 right-2 flex items-center gap-2">
-        {previewMethod === 'iframe' && (url.includes('litalien') || url.includes('sudcouleur')) && (
+        {previewMethod === 'iframe' && (url.includes('litalien') || url.includes('faseya') || url.includes('be-hype')) && (
           <div className="px-2 py-1 bg-green-500/90 text-white text-xs rounded flex items-center gap-1">
             <Zap className="w-3 h-3" />
             Live
@@ -293,12 +243,6 @@ export function LiveWebsitePreview({
           <div className="px-2 py-1 bg-blue-500/90 text-white text-xs rounded flex items-center gap-1">
             <Globe className="w-3 h-3" />
             Proxy
-          </div>
-        )}
-        {previewMethod === 'custom' && (
-          <div className="px-2 py-1 bg-purple-500/90 text-white text-xs rounded flex items-center gap-1">
-            <Zap className="w-3 h-3" />
-            Preview
           </div>
         )}
         {previewMethod === 'screenshot' && (

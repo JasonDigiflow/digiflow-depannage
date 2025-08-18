@@ -122,13 +122,13 @@ const CigaleAnimation = ({ className = "" }) => {
 // Composant Soleil 3D réaliste
 const ProvenceSun3D = () => {
   return (
-    <div className="fixed -top-20 -left-20 w-96 h-96 pointer-events-none overflow-hidden">
+    <div className="absolute top-10 left-10 w-64 h-64 pointer-events-none z-10">
       {/* Rayons de lumière animés */}
       <div className="absolute inset-0">
         {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute top-1/2 left-1/2 w-1 h-48 origin-bottom"
+            className="absolute top-1/2 left-1/2 w-1 h-32 origin-bottom"
             style={{
               transform: `translate(-50%, -50%) rotate(${i * 30}deg)`,
             }}
@@ -150,7 +150,7 @@ const ProvenceSun3D = () => {
 
       {/* Halo externe animé */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full"
         animate={{
           scale: [1, 1.2, 1],
           opacity: [0.2, 0.3, 0.2],
@@ -168,7 +168,7 @@ const ProvenceSun3D = () => {
 
       {/* Couronne solaire */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full"
         animate={{
           rotate: 360,
         }}
@@ -262,14 +262,6 @@ const ProvenceSun3D = () => {
         </svg>
       </motion.div>
 
-      {/* Effet de lumière sur la page */}
-      <div 
-        className="absolute top-1/2 left-1/2 w-[200vw] h-[200vh] pointer-events-none"
-        style={{
-          transform: "translate(-25%, -25%)",
-          background: "radial-gradient(circle at 0% 0%, rgba(254, 243, 199, 0.3) 0%, rgba(253, 230, 138, 0.15) 20%, transparent 50%)",
-        }}
-      />
     </div>
   )
 }
@@ -353,6 +345,18 @@ const founderPersonality = {
     musicStyle: "Lo-fi & Jul",
     morningRoutine: "Code, Coffee, Repeat",
     spirit: "80% logique, 20% magie provençale"
+  },
+  alexandre: {
+    title: "Le Growth Hacker Méditerranéen",
+    traits: ["Data-driven", "Innovateur", "Ambitieux"],
+    hobbies: ["Trading crypto", "Jet-ski expert", "Mixologue amateur"],
+    quote: "Les données ne mentent jamais, mais elles bronzent bien au soleil !",
+    superpower: "Fait x10 sur n'importe quelle métrique",
+    emoji: "📈",
+    favoriteDish: "Sushi & Red Bull",
+    musicStyle: "Techno & Drake",
+    morningRoutine: "Stats, Stratégie, Scale",
+    spirit: "60% data, 40% intuition géniale"
   }
 }
 
@@ -362,8 +366,8 @@ const timelineEvents = [
     year: "2020",
     season: "Été",
     title: "La Rencontre",
-    description: "Deux étudiants, une terrasse, un projet fou",
-    funny: "Premier brainstorming : 3 pizzas, 12 cafés, 1 idée géniale",
+    description: "Trois étudiants, une terrasse, un projet fou",
+    funny: "Premier brainstorming : 5 pizzas, 18 cafés, 1 idée géniale",
     icon: Coffee,
     weather: "32°C ☀️"
   },
@@ -456,13 +460,11 @@ export default function AboutPage() {
     <>
       <NavigationPremium />
       
-      {/* Soleil 3D spectaculaire */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <ProvenceSun3D />
-      </div>
-      
       {/* Hero Section Provence Premium */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
+        {/* Soleil 3D spectaculaire */}
+        <ProvenceSun3D />
+        
         {/* Fond animé Provence additionnel */}
         <LavenderField />
         
@@ -552,7 +554,7 @@ export default function AboutPage() {
             </motion.p>
 
             {/* Fondateurs en mode fun */}
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
               <PostCard delay={0.6}>
                 <motion.div
                   className="bg-white rounded-2xl p-8 shadow-2xl border-2 border-violet-200 relative overflow-hidden cursor-pointer group"
@@ -638,6 +640,49 @@ export default function AboutPage() {
                   </div>
                 </motion.div>
               </PostCard>
+
+              <PostCard delay={1.0}>
+                <motion.div
+                  className="bg-white rounded-2xl p-8 shadow-2xl border-2 border-green-200 relative overflow-hidden cursor-pointer group"
+                  whileHover={{ scale: 1.03, rotate: -1 }}
+                  onClick={() => setSelectedFounder("alexandre")}
+                >
+                  <div className="absolute top-4 right-4 text-4xl">📈</div>
+                  
+                  {/* Photo polaroid */}
+                  <div className="relative mb-6">
+                    <div className="w-48 h-48 mx-auto bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl transform rotate-2 group-hover:rotate-4 transition-transform flex items-center justify-center">
+                      <span className="text-7xl font-bold text-white">A</span>
+                    </div>
+                    <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-white px-4 py-1 rounded-full shadow-lg">
+                      <span className="text-xs font-bold text-green-600">CMO • 25 ans</span>
+                    </div>
+                  </div>
+
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Alexandre</h3>
+                  <p className="text-green-600 font-medium mb-3">{founderPersonality.alexandre.title}</p>
+                  
+                  <div className="space-y-2 text-left">
+                    <p className="text-sm text-gray-600 italic">
+                      "{founderPersonality.alexandre.quote}"
+                    </p>
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {founderPersonality.alexandre.traits.map((trait) => (
+                        <span key={trait} className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
+                          {trait}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-4 pt-4 border-t border-green-100">
+                    <div className="flex items-center justify-between text-xs text-gray-500">
+                      <span>🍣 {founderPersonality.alexandre.favoriteDish}</span>
+                      <span>🎵 {founderPersonality.alexandre.musicStyle}</span>
+                    </div>
+                  </div>
+                </motion.div>
+              </PostCard>
             </div>
 
             {/* Fun fact */}
@@ -689,21 +734,16 @@ export default function AboutPage() {
           {/* Timeline façon BD */}
           <div className="relative">
             {/* Ligne de timeline en zigzag */}
-            <svg className="absolute left-1/2 transform -translate-x-1/2 w-2 h-full" viewBox="0 0 10 1000">
-              <path
-                d="M 5 0 Q 0 50 5 100 T 5 200 Q 10 250 5 300 T 5 400 Q 0 450 5 500 T 5 600 Q 10 650 5 700 T 5 800"
-                stroke="url(#gradient)"
-                strokeWidth="3"
-                fill="none"
-                strokeDasharray="5,5"
-              />
-              <defs>
-                <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#f59e0b" />
-                  <stop offset="100%" stopColor="#7c3aed" />
-                </linearGradient>
-              </defs>
-            </svg>
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full">
+              <div className="relative h-full">
+                {/* Ligne principale continue */}
+                <div className="absolute inset-0 w-1 bg-gradient-to-b from-amber-500 via-orange-500 to-violet-500" 
+                     style={{
+                       backgroundImage: "repeating-linear-gradient(180deg, #f59e0b 0px, #f59e0b 10px, transparent 10px, transparent 20px)"
+                     }}
+                />
+              </div>
+            </div>
 
             {/* Événements en mode BD */}
             <div className="space-y-24">
@@ -959,7 +999,12 @@ export default function AboutPage() {
                 <span className="text-2xl">🤝</span>
                 <div className="text-center">
                   <p className="font-handwriting text-2xl text-orange">Jason</p>
-                  <p className="text-xs text-gray-500">Team Pastis 🥃</p>
+                  <p className="text-xs text-gray-500">Team Ricard 🥃</p>
+                </div>
+                <span className="text-2xl">🤝</span>
+                <div className="text-center">
+                  <p className="font-handwriting text-2xl text-purple-600">Alexandre</p>
+                  <p className="text-xs text-gray-500">Team Eau fraîche 💧</p>
                 </div>
               </div>
             </div>

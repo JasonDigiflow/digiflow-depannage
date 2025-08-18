@@ -282,8 +282,17 @@ export default function GoogleBusinessPage() {
   const [selectedIndustry, setSelectedIndustry] = useState(0)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setReviewsCount(prev => prev < 999 ? prev + 7 : 0)
+    // Animation s'arrête à 890
+    let interval: NodeJS.Timeout
+    interval = setInterval(() => {
+      setReviewsCount(prev => {
+        if (prev < 890) {
+          return Math.min(prev + 7, 890)
+        } else {
+          clearInterval(interval)
+          return 890
+        }
+      })
     }, 100)
     return () => clearInterval(interval)
   }, [])
@@ -364,7 +373,7 @@ export default function GoogleBusinessPage() {
                 <span className="text-white">Google</span>
                 <br />
                 <span className="bg-gradient-to-r from-green-400 via-emerald-400 to-teal-400 bg-clip-text text-transparent animate-gradient-x">
-                  Business Profile Pro
+                  My Business
                 </span>
               </h1>
 
