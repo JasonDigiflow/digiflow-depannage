@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { ExternalLink, Globe, RefreshCw, AlertCircle, Zap } from "lucide-react"
+import { ExternalLink, Globe, RefreshCw, AlertCircle, Zap, Camera } from "lucide-react"
 
 interface LiveWebsitePreviewProps {
   url: string
@@ -34,10 +34,11 @@ export function LiveWebsitePreview({
     setLoading(true)
     setError(false)
 
-    // Pour Be-Hype, utiliser directement le screenshot
+    // Pour Be-Hype, utiliser directement thum.io qui fonctionne bien
     if (url.includes('be-hype')) {
-      // Utiliser directement une capture ou le composant personnalisé
-      setPreviewMethod('custom')
+      setPreviewMethod('screenshot')
+      // Thum.io est gratuit et fonctionne bien pour les captures
+      setPreviewUrl(`https://image.thum.io/get/width/1920/crop/1080/noanimate/${url}`)
       setLoading(false)
       return
     }
@@ -140,51 +141,31 @@ export function LiveWebsitePreview({
             />
           )}
 
-          {/* Méthode 2: Custom preview pour Be-Hype */}
-          {previewMethod === 'custom' && url.includes('be-hype') && (
-            <div className="w-full h-full bg-black text-white overflow-hidden">
-              <div className="p-6 border-b border-gray-800">
-                <div className="flex justify-between items-center">
-                  <div className="text-3xl font-bold tracking-wider">BE-HYPE</div>
-                  <div className="flex gap-6 text-gray-400">
-                    <span className="hover:text-white cursor-pointer">Influenceurs</span>
-                    <span className="hover:text-white cursor-pointer">Établissements</span>
-                    <span className="hover:text-white cursor-pointer">Analytics</span>
+          {/* Méthode 2: Screenshot pour Be-Hype */}
+          {previewMethod === 'screenshot' && url.includes('be-hype') && previewUrl && (
+            <div className="relative w-full h-full">
+              <img
+                key={refreshKey}
+                src={previewUrl}
+                alt={title}
+                className="w-full h-full object-cover object-top"
+                onError={() => {
+                  // Si l'échec, essayer un autre service
+                  const alternativeUrl = `https://shot.screenshotapi.net/screenshot?token=TBPJKP6-Z4RMHKB-HNJ6FGC-1TNVFVS&url=${encodeURIComponent(url)}&width=1920&height=1080&output=image&file_type=png&wait_for_event=load`
+                  setPreviewUrl(alternativeUrl)
+                }}
+              />
+              
+              {/* Message d'information */}
+              <div className="absolute bottom-4 left-4 right-4">
+                <div className="bg-black/80 backdrop-blur-sm rounded-lg p-3 text-white text-sm">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Globe className="w-4 h-4 text-orange" />
+                    <span className="font-medium">Aperçu en temps réel</span>
                   </div>
-                </div>
-              </div>
-              <div className="p-12">
-                <h1 className="text-6xl font-bold mb-6">
-                  CONNECT<br/>
-                  <span className="text-orange-500">CREATORS</span><br/>
-                  WITH BRANDS
-                </h1>
-                <p className="text-xl text-gray-400 mb-8 max-w-2xl">
-                  La plateforme qui révolutionne la mise en relation entre établissements et créateurs de contenu.
-                </p>
-                <div className="flex gap-4">
-                  <button className="px-8 py-3 bg-orange-500 text-black font-bold rounded-lg">
-                    CRÉER MON COMPTE
-                  </button>
-                  <button className="px-8 py-3 border border-white rounded-lg">
-                    DÉCOUVRIR
-                  </button>
-                </div>
-              </div>
-              <div className="absolute bottom-8 left-8 right-8">
-                <div className="grid grid-cols-3 gap-6">
-                  <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl p-4 text-center">
-                    <div className="text-2xl font-bold text-orange-500">3000+</div>
-                    <div className="text-sm text-gray-400">Influenceurs</div>
-                  </div>
-                  <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl p-4 text-center">
-                    <div className="text-2xl font-bold text-orange-500">500+</div>
-                    <div className="text-sm text-gray-400">Établissements</div>
-                  </div>
-                  <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl p-4 text-center">
-                    <div className="text-2xl font-bold text-orange-500">26K€</div>
-                    <div className="text-sm text-gray-400">MRR</div>
-                  </div>
+                  <p className="text-xs text-white/70">
+                    Capture actualisée du site Be-Hype. Cliquez pour visiter le site complet.
+                  </p>
                 </div>
               </div>
             </div>
@@ -295,10 +276,10 @@ export function LiveWebsitePreview({
             Proxy
           </div>
         )}
-        {previewMethod === 'custom' && (
-          <div className="px-2 py-1 bg-purple-500/90 text-white text-xs rounded flex items-center gap-1">
-            <Zap className="w-3 h-3" />
-            Preview
+        {previewMethod === 'screenshot' && url.includes('be-hype') && (
+          <div className="px-2 py-1 bg-orange-500/90 text-white text-xs rounded flex items-center gap-1">
+            <Camera className="w-3 h-3" />
+            Live
           </div>
         )}
         {previewMethod === 'screenshot' && (
