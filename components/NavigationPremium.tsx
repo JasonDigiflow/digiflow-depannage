@@ -60,7 +60,7 @@ export function NavigationPremium() {
         animate={{ y: 0 }}
         transition={{ type: "spring", damping: 20 }}
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-700",
+          "fixed top-0 left-0 right-0 z-40 transition-all duration-700",
           isScrolled ? "py-2" : "py-4"
         )}
       >

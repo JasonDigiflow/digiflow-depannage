@@ -122,13 +122,13 @@ const CigaleAnimation = ({ className = "" }) => {
 // Composant Soleil 3D réaliste
 const ProvenceSun3D = () => {
   return (
-    <div className="fixed -top-20 -left-20 w-96 h-96 pointer-events-none overflow-hidden">
+    <div className="absolute top-10 left-10 w-64 h-64 pointer-events-none z-10">
       {/* Rayons de lumière animés */}
       <div className="absolute inset-0">
         {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute top-1/2 left-1/2 w-1 h-48 origin-bottom"
+            className="absolute top-1/2 left-1/2 w-1 h-32 origin-bottom"
             style={{
               transform: `translate(-50%, -50%) rotate(${i * 30}deg)`,
             }}
@@ -150,7 +150,7 @@ const ProvenceSun3D = () => {
 
       {/* Halo externe animé */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full"
         animate={{
           scale: [1, 1.2, 1],
           opacity: [0.2, 0.3, 0.2],
@@ -168,7 +168,7 @@ const ProvenceSun3D = () => {
 
       {/* Couronne solaire */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full"
         animate={{
           rotate: 360,
         }}
@@ -262,14 +262,6 @@ const ProvenceSun3D = () => {
         </svg>
       </motion.div>
 
-      {/* Effet de lumière sur la page */}
-      <div 
-        className="absolute top-1/2 left-1/2 w-[200vw] h-[200vh] pointer-events-none"
-        style={{
-          transform: "translate(-25%, -25%)",
-          background: "radial-gradient(circle at 0% 0%, rgba(254, 243, 199, 0.3) 0%, rgba(253, 230, 138, 0.15) 20%, transparent 50%)",
-        }}
-      />
     </div>
   )
 }
@@ -468,13 +460,11 @@ export default function AboutPage() {
     <>
       <NavigationPremium />
       
-      {/* Soleil 3D spectaculaire */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <ProvenceSun3D />
-      </div>
-      
       {/* Hero Section Provence Premium */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
+        {/* Soleil 3D spectaculaire */}
+        <ProvenceSun3D />
+        
         {/* Fond animé Provence additionnel */}
         <LavenderField />
         
@@ -1009,7 +999,12 @@ export default function AboutPage() {
                 <span className="text-2xl">🤝</span>
                 <div className="text-center">
                   <p className="font-handwriting text-2xl text-orange">Jason</p>
-                  <p className="text-xs text-gray-500">Team Pastis 🥃</p>
+                  <p className="text-xs text-gray-500">Team Ricard 🥃</p>
+                </div>
+                <span className="text-2xl">🤝</span>
+                <div className="text-center">
+                  <p className="font-handwriting text-2xl text-purple-600">Alexandre</p>
+                  <p className="text-xs text-gray-500">Team Eau fraîche 💧</p>
                 </div>
               </div>
             </div>
