@@ -16,10 +16,12 @@ const buttonVariants = cva(
         glass: "glass text-foreground hover:bg-white/10",
       },
       size: {
-        default: "h-10 px-6 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-12 rounded-premium px-8 text-base",
-        icon: "h-10 w-10",
+        xs: "h-8 px-3 text-xs",
+        default: "h-9 sm:h-10 px-4 sm:px-6 py-2 text-sm sm:text-base",
+        sm: "h-8 sm:h-9 rounded-md px-3 text-sm",
+        lg: "h-11 sm:h-12 rounded-premium px-6 sm:px-8 text-base sm:text-lg",
+        xl: "h-12 sm:h-14 px-8 sm:px-10 text-lg sm:text-xl rounded-premium",
+        icon: "h-9 w-9 sm:h-10 sm:w-10",
       },
     },
     defaultVariants: {

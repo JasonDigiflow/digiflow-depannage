@@ -196,45 +196,45 @@ export function TestimonialsSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-20 relative overflow-hidden">
+    <section ref={sectionRef} className="py-12 px-4 sm:py-16 md:py-20 lg:py-24 relative overflow-x-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-dark-muted via-dark to-dark-muted" />
       
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="testimonials-title text-center mb-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
+        <div className="testimonials-title text-center mx-auto mb-6 sm:mb-8 md:mb-10 lg:mb-12">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 mb-4"
+            className="inline-flex items-center gap-2 mb-4 mx-auto justify-center"
           >
-            <Quote className="w-8 h-8 text-violet" />
+            <Quote className="w-8 h-8 sm:w-8 sm:h-8 text-violet" />
           </motion.div>
           
-          <h2 className="text-4xl md:text-5xl font-bold font-heading mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-3 sm:mb-4 text-center mx-auto">
             Ils nous font <span className="text-gradient">confiance</span>
           </h2>
-          <p className="text-xl text-foreground-muted max-w-3xl mx-auto">
+          <p className="text-sm sm:text-lg md:text-xl text-foreground-muted max-w-3xl mx-auto px-4 sm:px-0 text-center">
             Découvrez les témoignages de nos clients et leurs résultats concrets
           </p>
 
           {/* Rating summary */}
-          <div className="flex items-center justify-center gap-4 mt-6">
-            <div className="flex gap-1">
+          <div className="flex items-center justify-center gap-3 sm:gap-3 md:gap-4 mt-4 sm:mt-6 mx-auto">
+            <div className="flex gap-1 sm:gap-1">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-5 h-5 fill-orange text-orange" />
+                <Star key={i} className="w-5 h-5 sm:w-5 sm:h-5 fill-orange text-orange" />
               ))}
             </div>
-            <span className="text-lg font-semibold">4.9/5</span>
-            <span className="text-foreground-muted">sur 180+ avis Google</span>
+            <span className="text-lg sm:text-lg font-semibold text-center">4.9/5</span>
+            <span className="text-sm sm:text-base text-foreground-muted text-center">sur 180+ avis Google</span>
           </div>
         </div>
 
         {/* Testimonials grid */}
         <div 
           ref={carouselRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 mx-auto justify-center"
         >
           {testimonials.map((testimonial) => (
             <motion.div
@@ -243,25 +243,25 @@ export function TestimonialsSection() {
               whileHover={{ y: -5 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <Card variant="glass" className="h-full">
-                <CardContent className="p-6">
+              <Card variant="glass" className="h-full w-full">
+                <CardContent className="p-4 sm:p-4 md:p-6">
                   {/* Quote icon */}
-                  <Quote className="w-8 h-8 text-violet/30 mb-4" />
+                  <Quote className="w-8 h-8 sm:w-8 sm:h-8 text-violet/30 mb-3 sm:mb-4 mx-auto" />
                   
                   {/* Content */}
-                  <p className="text-foreground-muted mb-6 italic">
+                  <p className="text-sm sm:text-base text-foreground-muted mb-4 sm:mb-6 italic text-center">
                     "{testimonial.content}"
                   </p>
 
                   {/* Highlight badge */}
-                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-violet/20 to-orange/20 rounded-full mb-4">
-                    <Star className="w-4 h-4 text-orange" />
-                    <span className="text-sm font-semibold">{testimonial.highlight}</span>
+                  <div className="inline-flex items-center gap-2 sm:gap-2 px-3 sm:px-3 py-1 bg-gradient-to-r from-violet/20 to-orange/20 rounded-full mb-3 sm:mb-4 mx-auto justify-center">
+                    <Star className="w-4 h-4 sm:w-4 sm:h-4 text-orange" />
+                    <span className="text-sm sm:text-sm font-semibold text-center">{testimonial.highlight}</span>
                   </div>
 
                   {/* Author */}
-                  <div className="flex items-center gap-4">
-                    <div className="relative w-12 h-12">
+                  <div className="flex items-center gap-3 sm:gap-3 md:gap-4 justify-center">
+                    <div className="relative w-12 h-12 sm:w-12 sm:h-12">
                       <Image
                         src={testimonial.avatar}
                         alt={testimonial.name}
@@ -271,17 +271,17 @@ export function TestimonialsSection() {
                       <div className="absolute inset-0 rounded-full border-2 border-violet/30" />
                     </div>
                     <div>
-                      <div className="font-semibold">{testimonial.name}</div>
-                      <div className="text-sm text-foreground-muted">
+                      <div className="text-sm sm:text-base font-semibold text-center">{testimonial.name}</div>
+                      <div className="text-sm sm:text-sm text-foreground-muted text-center">
                         {testimonial.role} • {testimonial.company}
                       </div>
                     </div>
                   </div>
 
                   {/* Rating */}
-                  <div className="flex gap-1 mt-4">
+                  <div className="flex gap-1 sm:gap-1 mt-3 sm:mt-4 justify-center">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-orange text-orange" />
+                      <Star key={i} className="w-4 h-4 sm:w-4 sm:h-4 fill-orange text-orange" />
                     ))}
                   </div>
                 </CardContent>
@@ -296,16 +296,16 @@ export function TestimonialsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mt-12 text-center"
+          className="mt-8 sm:mt-10 md:mt-12 text-center mx-auto px-4"
         >
           <a
             href="https://g.page/r/digiflow/review"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-violet hover:text-violet-hover transition-colors"
+            className="inline-flex items-center gap-2 sm:gap-2 text-violet hover:text-violet-hover transition-colors text-sm sm:text-base justify-center"
           >
-            <span>Voir tous les avis sur Google</span>
-            <Star className="w-4 h-4" />
+            <span className="text-sm sm:text-base text-center">Voir tous les avis sur Google</span>
+            <Star className="w-4 h-4 sm:w-4 sm:h-4" />
           </a>
         </motion.div>
       </div>

@@ -73,69 +73,70 @@ export function CTASection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-20 relative overflow-hidden">
+    <section ref={sectionRef} className="py-12 px-4 sm:py-16 md:py-20 relative overflow-x-hidden">
       {/* Background avec gradient animé */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-violet/10 via-dark to-orange/10" />
         <div
           ref={glowRef}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-violet/30 to-orange/30 rounded-full blur-[100px]"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-gradient-to-r from-violet/30 to-orange/30 rounded-full blur-[100px]"
         />
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="cta-content glass rounded-premium p-8 md:p-12 text-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="cta-content glass rounded-lg p-4 sm:p-6 md:p-8 lg:p-12 text-center w-full mx-auto">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-violet/20 to-orange/20 rounded-full mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-violet/20 to-orange/20 rounded-full mb-6 mx-auto justify-center"
           >
             <div className="w-2 h-2 bg-accent-success rounded-full animate-pulse" />
-            <span className="text-sm font-semibold">Slots limités ce mois</span>
+            <span className="text-sm font-semibold text-center">Slots limités ce mois</span>
           </motion.div>
 
           {/* Titre principal */}
-          <h2 className="text-4xl md:text-5xl font-bold font-heading mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-4 text-center mx-auto">
             Audit acquisition <span className="text-gradient">gratuit</span>
           </h2>
 
-          <p className="text-xl text-foreground-muted mb-8 max-w-2xl mx-auto">
+          <p className="text-sm sm:text-lg md:text-xl text-foreground-muted mb-6 sm:mb-8 max-w-2xl mx-auto text-center px-4 sm:px-0">
             Diagnostic complet de votre tunnel d'acquisition. Google Ads, Meta Ads, SEO. 
             <span className="text-white font-medium">ROI x4 garanti ou remboursé.</span>
           </p>
 
           {/* Badges de confiance */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <div className="cta-badge flex items-center justify-center gap-2 glass rounded-glass p-3">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-4 mb-6 sm:mb-8 mx-auto">
+            <div className="cta-badge flex items-center justify-center gap-2 glass rounded-lg p-4 w-full">
               <Calendar className="w-5 h-5 text-violet" />
-              <span className="text-sm">Rendez-vous sous 48h</span>
+              <span className="text-sm text-center">Rendez-vous sous 48h</span>
             </div>
-            <div className="cta-badge flex items-center justify-center gap-2 glass rounded-glass p-3">
+            <div className="cta-badge flex items-center justify-center gap-2 glass rounded-lg p-4 w-full">
               <Clock className="w-5 h-5 text-orange" />
-              <span className="text-sm">Audit acquisition offert</span>
+              <span className="text-sm text-center">Audit acquisition offert</span>
             </div>
-            <div className="cta-badge flex items-center justify-center gap-2 glass rounded-glass p-3">
+            <div className="cta-badge flex items-center justify-center gap-2 glass rounded-lg p-4 w-full">
               <Shield className="w-5 h-5 text-accent-success" />
-              <span className="text-sm">Sans engagement</span>
+              <span className="text-sm text-center">Sans engagement</span>
             </div>
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="group shadow-xl"
+          <div className="flex flex-col sm:flex-col md:flex-row gap-4 justify-center mx-auto w-full">
+            <Button
+              size="lg"
+              className="group shadow-xl w-full sm:w-full md:w-auto min-h-[44px] px-6"
               onClick={() => setIsCalendlyOpen(true)}
             >
               Audit acquisition gratuit
               <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               variant="outline"
+              className="w-full sm:w-full md:w-auto min-h-[44px] px-6"
               onClick={() => {
                 // Scroll vers le formulaire ou ouvrir WhatsApp
                 window.open("https://wa.me/33600000000?text=Bonjour, je souhaite obtenir un audit gratuit", "_blank")
@@ -146,7 +147,7 @@ export function CTASection() {
           </div>
 
           {/* Urgency text */}
-          <p className="text-sm text-foreground-muted mt-6">
+          <p className="text-sm text-foreground-muted mt-4 sm:mt-6 text-center">
             Réponse garantie sous 24h • ROI x4 minimum garanti • Plus de 150 audits réalisés
           </p>
 
@@ -156,7 +157,7 @@ export function CTASection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
             viewport={{ once: true }}
-            className="mt-8 grid grid-cols-7 gap-2 max-w-xs mx-auto"
+            className="mt-6 sm:mt-8 grid grid-cols-7 gap-2 max-w-xs mx-auto"
           >
             {[...Array(7)].map((_, i) => {
               const isAvailable = i === 2 || i === 4 || i === 5
@@ -164,7 +165,7 @@ export function CTASection() {
                 <div
                   key={i}
                   className={cn(
-                    "h-10 rounded-md flex items-center justify-center text-xs font-medium transition-all",
+                    "h-10 rounded-md flex items-center justify-center text-sm font-medium transition-all min-h-[44px]",
                     isAvailable
                       ? "bg-gradient-to-br from-violet/20 to-orange/20 hover:from-violet/30 hover:to-orange/30 cursor-pointer"
                       : "bg-glass opacity-50"
@@ -183,7 +184,7 @@ export function CTASection() {
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 1 }}
           viewport={{ once: true }}
-          className="mt-12 flex flex-wrap justify-center gap-8"
+          className="mt-8 sm:mt-12 flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 px-4"
         >
           {[
             { value: "2h", label: "Temps de réponse moyen" },
@@ -197,10 +198,10 @@ export function CTASection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 + index * 0.1, duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-center"
+              className="text-center mx-auto"
             >
-              <div className="text-2xl font-bold text-gradient">{stat.value}</div>
-              <div className="text-xs text-foreground-muted">{stat.label}</div>
+              <div className="text-xl sm:text-2xl font-bold text-gradient text-center">{stat.value}</div>
+              <div className="text-sm text-foreground-muted text-center">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>

@@ -61,13 +61,13 @@ export function NavigationPremium() {
         transition={{ type: "spring", damping: 20 }}
         className={cn(
           "fixed top-0 left-0 right-0 z-40 transition-all duration-700",
-          isScrolled ? "py-2" : "py-4"
+          isScrolled ? "py-1 sm:py-2" : "py-2 sm:py-4"
         )}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             className={cn(
-              "relative rounded-2xl transition-all duration-700 px-6",
+              "relative rounded-2xl transition-all duration-700 px-3 sm:px-4 md:px-6",
               isScrolled ? (
                 isInverted 
                   ? "backdrop-blur-2xl bg-white/95 shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-black/5"
@@ -75,11 +75,11 @@ export function NavigationPremium() {
               ) : ""
             )}
           >
-            <div className="flex items-center justify-between h-20">
+            <div className="flex items-center justify-between h-16 sm:h-18 md:h-20">
               {/* Logo with smooth transition */}
               <Link href="/" className="flex items-center group">
-                <motion.div 
-                  className="relative h-32 w-[400px]"
+                <motion.div
+                  className="relative h-12 w-40 sm:h-14 sm:w-48 md:h-16 md:w-52 lg:h-16 lg:w-56"
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
@@ -187,7 +187,7 @@ export function NavigationPremium() {
                           exit={{ opacity: 0, y: 10, scale: 0.95 }}
                           transition={{ duration: 0.2, type: "spring", damping: 25 }}
                           className={cn(
-                            "absolute top-full left-0 mt-2 w-72 rounded-xl p-2 shadow-2xl backdrop-blur-2xl",
+                            "absolute top-full left-0 mt-2 w-64 sm:w-72 rounded-xl p-2 shadow-2xl backdrop-blur-2xl max-h-[70vh] overflow-y-auto",
                             isInverted 
                               ? "bg-white/95 border border-gray-200/50" 
                               : "bg-black/90 border border-white/10"
@@ -283,8 +283,8 @@ export function NavigationPremium() {
             className="fixed inset-0 z-40 lg:hidden"
           >
             <div className="absolute inset-0 bg-black/95 backdrop-blur-2xl" />
-            <div className="relative h-full overflow-y-auto">
-              <div className="pt-24 pb-6 px-6">
+            <div className="relative h-full overflow-y-auto max-h-screen">
+              <div className="pt-20 pb-20 px-4 sm:px-6">
                 {navItems.map((item, index) => (
                   <motion.div
                     key={item.label}
@@ -295,18 +295,18 @@ export function NavigationPremium() {
                   >
                     <Link
                       href={item.href}
-                      className="block text-2xl font-medium text-white hover:text-violet transition-colors mb-2"
+                      className="block text-lg sm:text-xl md:text-2xl font-medium text-white hover:text-violet transition-colors mb-2"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item.label}
                     </Link>
                     {item.dropdown && (
-                      <div className="ml-4 space-y-2">
+                      <div className="ml-3 sm:ml-4 space-y-2">
                         {item.dropdown.map((subItem) => (
                           <Link
                             key={subItem.label}
                             href={subItem.href}
-                            className="block text-sm text-white/60 hover:text-white transition-colors"
+                            className="block text-xs sm:text-sm text-white/60 hover:text-white transition-colors py-1"
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
                             {subItem.label}

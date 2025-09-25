@@ -193,7 +193,7 @@ export function ServicesSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="services" className="py-32 relative overflow-hidden">
+    <section ref={sectionRef} id="services" className="py-12 px-4 sm:py-16 md:py-20 lg:py-24 relative overflow-x-hidden">
       {/* Background premium */}
       <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark-muted/50 to-dark" />
       <div className="absolute inset-0">
@@ -201,32 +201,32 @@ export function ServicesSection() {
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange/5 rounded-full blur-[150px]" />
       </div>
       
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="services-title text-center mb-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="services-title text-center mx-auto mb-8 sm:mb-12 md:mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 sm:px-4 sm:py-2 glass rounded-full mb-4 sm:mb-6 mx-auto justify-center"
           >
             <div className="w-2 h-2 bg-violet rounded-full animate-pulse" />
-            <span className="text-sm font-medium text-white/70">Services d'acquisition client</span>
+            <span className="text-sm sm:text-sm font-medium text-white/70 text-center">Services d'acquisition client</span>
           </motion.div>
           
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold font-heading mb-4 sm:mb-6 text-center mx-auto">
             <span className="block mb-2 text-white">Acquisition qui</span>
             <span className="bg-gradient-to-r from-violet via-purple-400 to-orange bg-clip-text text-transparent">
               convertit
             </span>
           </h2>
-          <p className="text-xl md:text-2xl text-white/60 max-w-3xl mx-auto">
+          <p className="text-sm sm:text-lg md:text-xl lg:text-xl text-white/60 max-w-3xl mx-auto px-4 text-center">
             Google Ads, Meta Ads, SEO & landing pages optimisées. 
             <span className="text-white/80 font-medium"> ROI x4 garanti ou remboursé.</span>
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mx-auto justify-center">
           {services.map((service, index) => {
             const Icon = service.icon
             const isExpanded = expandedService === service.id
@@ -235,10 +235,10 @@ export function ServicesSection() {
               <motion.div
                 key={service.id}
                 layout
-                className={`service-card ${isExpanded ? "lg:col-span-2" : ""}`}
+                className={`service-card ${isExpanded ? "md:col-span-2 lg:col-span-2" : ""}`}
               >
                 <Card
-                  className="h-full cursor-pointer transition-all duration-500 hover:shadow-2xl group relative overflow-hidden"
+                  className="h-full cursor-pointer transition-all duration-500 hover:shadow-2xl group relative overflow-hidden w-full"
                   hover3d
                   variant="glass"
                   onClick={() => setExpandedService(isExpanded ? null : service.id)}
@@ -248,20 +248,20 @@ export function ServicesSection() {
                   <CardHeader>
                     <div className="flex items-start justify-between mb-4">
                       <div
-                        className={`p-3 rounded-glass bg-gradient-to-br ${
+                        className={`p-3 sm:p-3 rounded-lg bg-gradient-to-br ${
                           service.color === "violet"
                             ? "from-violet/20 to-violet/10"
                             : "from-orange/20 to-orange/10"
                         }`}
                       >
                         <Icon
-                          className={`w-6 h-6 ${
+                          className={`w-6 h-6 sm:w-6 sm:h-6 ${
                             service.color === "violet" ? "text-violet" : "text-orange"
                           }`}
                         />
                       </div>
                       <span
-                        className={`text-sm font-semibold px-3 py-1 rounded-full ${
+                        className={`text-sm sm:text-sm font-semibold px-3 sm:px-3 py-1 rounded-full ${
                           service.color === "violet"
                             ? "bg-violet/10 text-violet"
                             : "bg-orange/10 text-orange"
@@ -270,8 +270,8 @@ export function ServicesSection() {
                         {service.stat}
                       </span>
                     </div>
-                    <CardTitle className="text-xl mb-2">{service.title}</CardTitle>
-                    <CardDescription className="text-foreground-muted">
+                    <CardTitle className="text-lg sm:text-xl mb-2 text-center">{service.title}</CardTitle>
+                    <CardDescription className="text-foreground-muted text-center text-sm sm:text-base">
                       {service.description}
                     </CardDescription>
                   </CardHeader>
@@ -283,7 +283,7 @@ export function ServicesSection() {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
-                          className="flex items-center text-sm text-foreground-muted group-hover:text-violet transition-colors"
+                          className="flex items-center justify-center text-sm sm:text-sm text-foreground-muted group-hover:text-violet transition-colors"
                         >
                           <span>Voir le détail</span>
                           <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -311,16 +311,16 @@ export function ServicesSection() {
                                     service.color === "violet" ? "bg-violet" : "bg-orange"
                                   }`}
                                 />
-                                <span className="text-sm text-foreground-muted">{benefit}</span>
+                                <span className="text-sm text-foreground-muted text-left">{benefit}</span>
                               </motion.li>
                             ))}
                           </ul>
 
-                          <div className="flex gap-3">
-                            <Button size="sm" variant={service.color === "violet" ? "default" : "orange"}>
+                          <div className="flex gap-3 justify-center w-full">
+                            <Button size="sm" variant={service.color === "violet" ? "default" : "orange"} className="min-h-[44px] px-4">
                               Devis express
                             </Button>
-                            <Button size="sm" variant="outline">
+                            <Button size="sm" variant="outline" className="min-h-[44px] px-4">
                               En savoir plus
                             </Button>
                           </div>
@@ -340,12 +340,12 @@ export function ServicesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mt-16 text-center"
+          className="mt-8 sm:mt-12 md:mt-16 text-center mx-auto px-4"
         >
-          <p className="text-lg text-foreground-muted mb-6">
+          <p className="text-sm sm:text-lg text-foreground-muted mb-6 text-center mx-auto">
             Besoin d'une stratégie sur-mesure ? Parlons de vos objectifs.
           </p>
-          <Button size="lg" className="shadow-xl whitespace-nowrap" onClick={openCalendly}>
+          <Button size="lg" className="shadow-xl whitespace-nowrap w-full sm:w-auto min-h-[44px] px-6" onClick={openCalendly}>
             <span className="flex items-center gap-2">
               Obtenir mon audit gratuit
               <ArrowRight className="w-4 h-4 flex-shrink-0" />

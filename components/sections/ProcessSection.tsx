@@ -139,22 +139,22 @@ export function ProcessSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-20 relative overflow-hidden">
+    <section ref={sectionRef} className="py-12 px-4 sm:py-16 md:py-20 lg:py-24 relative overflow-x-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark-muted to-dark opacity-50" />
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet/10 rounded-full blur-[100px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange/10 rounded-full blur-[100px]" />
+        <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-violet/10 rounded-full blur-[100px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-orange/10 rounded-full blur-[100px]" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
+        <div className="text-center mx-auto mb-6 sm:mb-8 md:mb-10 lg:mb-12">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold font-heading mb-4"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-3 sm:mb-4 text-center mx-auto"
           >
             La méthode <span className="text-gradient">DIGIFLOW</span>
           </motion.h2>
@@ -163,7 +163,7 @@ export function ProcessSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
             viewport={{ once: true }}
-            className="text-xl text-foreground-muted max-w-3xl mx-auto"
+            className="text-sm sm:text-lg md:text-xl text-foreground-muted max-w-3xl mx-auto px-4 sm:px-0 text-center"
           >
             Un process éprouvé en 5 étapes pour transformer votre présence digitale en machine à acquérir
           </motion.p>
@@ -172,7 +172,7 @@ export function ProcessSection() {
         {/* Timeline */}
         <div ref={timelineRef} className="relative">
           {/* Progress bar - moved to bottom with lower z-index */}
-          <div className="absolute top-32 left-0 right-0 h-1 bg-glass/30 rounded-full hidden lg:block z-0">
+          <div className="absolute top-24 sm:top-28 md:top-32 left-0 right-0 h-1 sm:h-1 bg-glass/30 rounded-full hidden lg:block z-0">
             <div
               ref={progressRef}
               className="absolute inset-y-0 left-0 bg-gradient-to-r from-violet/60 to-orange/60 rounded-full origin-left scale-x-0"
@@ -181,7 +181,7 @@ export function ProcessSection() {
           </div>
 
           {/* Steps - higher z-index to appear above progress bar */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 relative z-10">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6 md:gap-8 relative z-10 text-center">
             {steps.map((step, index) => {
               const Icon = step.icon
               return (
@@ -193,40 +193,40 @@ export function ProcessSection() {
                 >
                   {/* Connection line for mobile */}
                   {index < steps.length - 1 && (
-                    <div className="absolute top-20 left-1/2 w-0.5 h-24 bg-gradient-to-b from-violet to-orange opacity-30 lg:hidden" />
+                    <div className="absolute top-16 sm:top-20 left-1/2 w-1 h-16 sm:h-20 md:h-24 bg-gradient-to-b from-violet to-orange opacity-30 xl:hidden" />
                   )}
 
                   {/* Step number */}
-                  <div className="absolute -top-3 -right-3 w-8 h-8 bg-gradient-to-br from-violet to-orange rounded-full flex items-center justify-center text-sm font-bold">
+                  <div className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 w-8 h-8 sm:w-8 sm:h-8 bg-gradient-to-br from-violet to-orange rounded-full flex items-center justify-center text-sm sm:text-sm font-bold">
                     {step.id}
                   </div>
 
                   {/* Icon container - with background to cover progress bar */}
-                  <div className="mb-4 relative">
-                    <div className="process-icon w-20 h-20 mx-auto bg-gradient-to-br from-violet/20 to-orange/20 rounded-premium flex items-center justify-center preserve-3d backdrop-blur-sm border border-white/10">
-                      <Icon className="w-10 h-10 text-violet" />
+                  <div className="mb-3 sm:mb-4 relative">
+                    <div className="process-icon w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 mx-auto bg-gradient-to-br from-violet/20 to-orange/20 rounded-lg flex items-center justify-center preserve-3d backdrop-blur-sm border border-white/10">
+                      <Icon className="w-8 h-8 sm:w-8 sm:h-8 md:w-10 md:h-10 text-violet" />
                     </div>
                     
                     {/* Pulse effect */}
-                    <div className="absolute inset-0 w-20 h-20 mx-auto bg-violet/20 rounded-premium animate-pulse" />
+                    <div className="absolute inset-0 w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 mx-auto bg-violet/20 rounded-lg animate-pulse" />
                   </div>
 
                   {/* Content - with background to ensure readability */}
-                  <div className="relative bg-dark/50 backdrop-blur-sm rounded-lg p-2">
-                    <h3 className="text-xl font-semibold mb-2 text-center">{step.title}</h3>
-                    <p className="text-sm text-foreground-muted text-center mb-4">
+                  <div className="relative bg-dark/50 backdrop-blur-sm rounded-lg p-4 sm:p-3 w-full">
+                    <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-2 text-center">{step.title}</h3>
+                    <p className="text-sm sm:text-sm text-foreground-muted text-center mb-3 sm:mb-4">
                       {step.description}
                     </p>
                   </div>
 
                   {/* Details (shown on hover) */}
-                  <div className="absolute top-full mt-4 left-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                    <div className="glass rounded-glass p-4 shadow-xl">
+                  <div className="absolute top-full mt-2 sm:mt-4 left-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
+                    <div className="glass rounded-lg p-3 sm:p-3 md:p-4 shadow-xl">
                       <ul className="space-y-1">
                         {step.details.map((detail, i) => (
-                          <li key={i} className="flex items-start gap-2 text-xs">
-                            <CheckCircle className="w-3 h-3 text-accent-success mt-0.5" />
-                            <span className="text-foreground-muted">{detail}</span>
+                          <li key={i} className="flex items-start gap-2 sm:gap-2 text-sm">
+                            <CheckCircle className="w-3 h-3 sm:w-3 sm:h-3 text-accent-success mt-0.5 flex-shrink-0" />
+                            <span className="text-foreground-muted text-sm">{detail}</span>
                           </li>
                         ))}
                       </ul>
@@ -244,7 +244,7 @@ export function ProcessSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
+          className="mt-8 sm:mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center mx-auto"
         >
           {[
             { label: "Délai moyen", value: "< 21 jours", color: "violet" },
@@ -254,14 +254,14 @@ export function ProcessSection() {
           ].map((stat, index) => (
             <div
               key={index}
-              className="text-center glass rounded-glass p-6"
+              className="text-center glass rounded-lg p-4 sm:p-4 md:p-6 w-full mx-auto"
             >
-              <div className={`text-3xl font-bold mb-2 ${
+              <div className={`text-lg sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-2 text-center ${
                 stat.color === "violet" ? "text-violet" : "text-orange"
               }`}>
                 {stat.value}
               </div>
-              <div className="text-sm text-foreground-muted">{stat.label}</div>
+              <div className="text-sm sm:text-sm text-foreground-muted text-center">{stat.label}</div>
             </div>
           ))}
         </motion.div>

@@ -28,7 +28,16 @@ function DraggableElement({ element, index, constraintRef, showAfterPreload }: {
   // Générer des positions aléatoires autour du centre qui évitent le texte
   const getRandomPosition = () => {
     // Positions prédéfinies qui évitent le centre où se trouve le texte
-    const safePositions = [
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+    const safePositions = isMobile ? [
+      { x: -120, y: -150 }, // Haut gauche
+      { x: 120, y: -140 },  // Haut droite
+      { x: -140, y: 0 },    // Gauche
+      { x: 140, y: 20 },    // Droite
+      { x: -100, y: 180 },  // Bas gauche
+      { x: 100, y: 170 },   // Bas droite
+      { x: 0, y: -200 },    // Haut centre
+    ] : [
       { x: -350, y: -200 }, // Haut gauche
       { x: 350, y: -180 },  // Haut droite
       { x: -400, y: 0 },    // Gauche
@@ -102,7 +111,7 @@ function DraggableElement({ element, index, constraintRef, showAfterPreload }: {
         }}
         className={`
           relative group
-          w-20 h-20 md:w-24 md:h-24
+          w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24
           bg-gradient-to-br ${element.color}
           backdrop-blur-xl
           rounded-2xl md:rounded-3xl
@@ -115,7 +124,7 @@ function DraggableElement({ element, index, constraintRef, showAfterPreload }: {
       >
         {/* Icône principale avec effet de brillance */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <Icon className="w-10 h-10 md:w-12 md:h-12 text-white/90 drop-shadow-lg" />
+          <Icon className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white/90 drop-shadow-lg" />
           <span className="text-xs font-medium text-white/70 mt-1">{element.label}</span>
         </div>
         
@@ -235,7 +244,7 @@ export function HeroSectionPremium() {
   }, [])
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark">
+    <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-dark">
       {/* Gradient de fond animé premium */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-dark via-dark-muted to-dark" />
@@ -285,17 +294,17 @@ export function HeroSectionPremium() {
         />
       </div>
 
-      {/* Éléments draggables - devant le texte mais positionnés pour ne pas l'empiéter */}
-      <div 
+      {/* Éléments draggables - cachés sur mobile */}
+      <div
         ref={constraintRef}
-        className="absolute inset-0 overflow-hidden pointer-events-none z-30"
+        className="hidden lg:block absolute inset-0 overflow-hidden pointer-events-none z-30"
       >
         <div className="relative w-full h-full flex items-center justify-center pointer-events-auto">
           {draggableElements.map((element, index) => (
-            <DraggableElement 
-              key={element.id} 
-              element={element} 
-              index={index} 
+            <DraggableElement
+              key={element.id}
+              element={element}
+              index={index}
               constraintRef={constraintRef}
               showAfterPreload={showDraggables}
             />
@@ -304,21 +313,21 @@ export function HeroSectionPremium() {
       </div>
 
       {/* Contenu principal */}
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-20 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
         {/* Badge disponibilité premium */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col items-center gap-4 mb-8"
+          className="flex flex-col items-center gap-3 sm:gap-4 mb-6 sm:mb-8"
         >
           {/* Message de disponibilité */}
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-green-500/30 to-emerald-500/30 blur-xl opacity-80 animate-pulse" />
-            <div className="relative px-6 py-3 bg-gradient-to-r from-green-500/10 to-emerald-500/10 backdrop-blur-xl rounded-full border border-green-500/20">
+            <div className="relative px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-500/10 to-emerald-500/10 backdrop-blur-xl rounded-full border border-green-500/20">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-sm font-medium bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                <span className="text-xs sm:text-sm font-medium bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
                   🔥 {availableProjects} projet{availableProjects > 1 ? 's' : ''} disponible{availableProjects > 1 ? 's' : ''} pour {nextMonth} {nextYear}
                 </span>
                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
@@ -326,8 +335,8 @@ export function HeroSectionPremium() {
             </div>
           </div>
 
-          {/* Badge interactif */}
-          <div className="relative">
+          {/* Badge interactif - caché sur mobile */}
+          <div className="relative hidden lg:block">
             <div className="absolute inset-0 bg-gradient-to-r from-violet to-orange blur-xl opacity-60 animate-pulse" />
             <div className="relative px-6 py-3 bg-gradient-to-r from-violet/10 to-orange/10 backdrop-blur-xl rounded-full border border-white/10">
               <div className="flex items-center gap-2">
@@ -344,7 +353,7 @@ export function HeroSectionPremium() {
         {/* Titre principal avec effet premium */}
         <h1
           ref={titleRef}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold font-heading mb-8 leading-tight"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-heading mb-4 sm:mb-6 md:mb-8 leading-[1.1]"
         >
           <span className="block mb-2">
             <span className="inline-block bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent">
@@ -371,7 +380,7 @@ export function HeroSectionPremium() {
         {/* Sous-titre stylé */}
         <p
           ref={subtitleRef}
-          className="text-xl md:text-2xl lg:text-3xl text-white/70 mb-12 max-w-3xl mx-auto leading-relaxed"
+          className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/70 mb-8 sm:mb-10 md:mb-12 max-w-3xl mx-auto leading-relaxed px-4"
         >
           Agence d'acquisition client avec{" "}
           <span className="text-white font-medium">ROI moyen x4</span>. 
@@ -382,18 +391,18 @@ export function HeroSectionPremium() {
         </p>
 
         {/* CTAs premium */}
-        <div ref={ctaRef} className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+        <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center px-4">
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <Button 
               size="lg" 
-              className="group relative px-8 py-6 text-base font-medium overflow-hidden inline-flex"
+              className="group relative px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base font-medium overflow-hidden inline-flex"
               onClick={openCalendly}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-violet via-purple-500 to-orange transition-all duration-300 group-hover:scale-110" />
-              <span className="relative z-10 inline-flex items-center gap-2" style={{ whiteSpace: 'nowrap' }}>
+              <span className="relative z-10 inline-flex items-center gap-2">
                 <span>Obtenir mon audit gratuit</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform inline-block" />
               </span>
@@ -407,7 +416,7 @@ export function HeroSectionPremium() {
             <Button 
               size="lg" 
               variant="outline"
-              className="px-8 py-6 text-base backdrop-blur-xl bg-white/5 border-white/10 hover:bg-white/10"
+              className="px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base backdrop-blur-xl bg-white/5 border-white/10 hover:bg-white/10"
               asChild
             >
               <Link href="#cases">
@@ -425,7 +434,7 @@ export function HeroSectionPremium() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.8 }}
-          className="mt-20 flex flex-wrap items-center justify-center gap-8"
+          className="mt-12 sm:mt-16 md:mt-20 flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 px-4"
         >
           {[
             { label: "Sites lancés", value: "+150", icon: Rocket },
@@ -443,16 +452,16 @@ export function HeroSectionPremium() {
                 className="group relative"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-violet/20 to-orange/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative px-6 py-3 glass rounded-2xl backdrop-blur-xl">
+                <div className="relative px-3 sm:px-5 md:px-6 py-2 sm:py-3 glass rounded-xl sm:rounded-2xl backdrop-blur-xl">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-gradient-to-br from-violet/30 to-orange/30 rounded-xl">
-                      <Icon className="w-6 h-6 text-white/90" />
+                    <div className="p-1.5 sm:p-2 bg-gradient-to-br from-violet/30 to-orange/30 rounded-lg sm:rounded-xl">
+                      <Icon className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white/90" />
                     </div>
                     <div>
-                      <div className="text-2xl font-bold bg-gradient-to-r from-violet to-orange bg-clip-text text-transparent">
+                      <div className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-violet to-orange bg-clip-text text-transparent">
                         {stat.value}
                       </div>
-                      <div className="text-xs text-white/60">{stat.label}</div>
+                      <div className="text-[10px] sm:text-xs text-white/60">{stat.label}</div>
                     </div>
                   </div>
                 </div>

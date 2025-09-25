@@ -43,9 +43,9 @@ export function LiveWebsitePreview({
         return
       }
       
-      // Be-Hype nécessite notre proxy pour contourner les restrictions
+      // Be-Hype nécessite notre proxy clean pour contourner les restrictions
       if (url.includes('be-hype')) {
-        setPreviewUrl('/api/behype-live')
+        setPreviewUrl('/api/behype-clean')
         setLoading(false)
         return
       }
@@ -131,7 +131,8 @@ export function LiveWebsitePreview({
               src={previewUrl}
               className="w-full h-full border-0"
               loading="lazy"
-              sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+              sandbox="allow-popups allow-forms"
+              allow="fullscreen; autoplay"
               onError={() => {
                 setError(true)
                 setPreviewMethod('proxy')

@@ -55,7 +55,7 @@ export function Navigation() {
       >
         <div
           className={cn(
-            "mx-auto max-w-7xl px-6 lg:px-8 transition-all duration-500",
+            "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 transition-all duration-500",
             isScrolled ? "mt-2" : "mt-0"
           )}
         >
@@ -65,10 +65,10 @@ export function Navigation() {
               isScrolled && "backdrop-blur-2xl bg-gradient-to-r from-dark/90 via-dark/80 to-dark/90 shadow-2xl border border-white/5"
             )}
           >
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-14 sm:h-16 md:h-18">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2 group">
-              <div className="relative h-10 w-40">
+              <div className="relative h-8 w-32 sm:h-10 sm:w-40 md:h-12 md:w-48">
                 <Image
                   src="/ASSETS/LOGOS DIGIFLOW/digiflow white.svg"
                   alt="DIGIFLOW"
@@ -170,12 +170,12 @@ export function Navigation() {
           >
             <div className="absolute inset-0 bg-dark/95 backdrop-blur-xl" />
             <div className="relative h-full overflow-y-auto">
-              <div className="pt-20 pb-6 px-6">
+              <div className="pt-16 sm:pt-20 pb-6 px-4 sm:px-6">
                 {navItems.map((item) => (
                   <div key={item.label} className="mb-4">
                     <Link
                       href={item.href}
-                      className="block text-xl font-medium text-foreground hover:text-violet transition-colors mb-2"
+                      className="block text-lg sm:text-xl font-medium text-foreground hover:text-violet transition-colors mb-2"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item.label}

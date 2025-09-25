@@ -140,28 +140,28 @@ const ProjectShowcase = () => {
   }, [activeProject, isHovered])
 
   return (
-    <section id="cases" className="py-24 relative overflow-hidden bg-gradient-to-br from-dark via-dark/95 to-dark">
+    <section id="cases" className="py-12 px-4 sm:py-16 md:py-20 lg:py-24 relative overflow-x-hidden bg-gradient-to-br from-dark via-dark/95 to-dark">
       {/* Background effects - Couleurs DIGIFLOW */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-violet/20 rounded-full blur-3xl -translate-x-48 -translate-y-48"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange/20 rounded-full blur-3xl translate-x-48 translate-y-48"></div>
+        <div className="absolute top-0 left-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-violet/20 rounded-full blur-3xl -translate-x-24 -translate-y-24 sm:-translate-x-32 sm:-translate-y-32 md:-translate-x-48 md:-translate-y-48"></div>
+        <div className="absolute bottom-0 right-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-orange/20 rounded-full blur-3xl translate-x-24 translate-y-24 sm:translate-x-32 sm:translate-y-32 md:translate-x-48 md:translate-y-48"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10 relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mx-auto mb-6 sm:mb-8 md:mb-10 lg:mb-12"
         >
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 md:mb-6 text-center mx-auto">
             Nos{' '}
             <span className="bg-gradient-to-r from-violet to-orange bg-clip-text text-transparent">
               Réalisations
             </span>
           </h2>
-          <p className="text-xl text-foreground-muted max-w-3xl mx-auto">
+          <p className="text-sm sm:text-lg md:text-xl text-foreground-muted max-w-3xl mx-auto px-4 sm:px-0 text-center">
             Découvrez les sites web que nous avons créés et qui génèrent de vrais résultats pour nos clients
           </p>
         </motion.div>
@@ -173,41 +173,41 @@ const ProjectShowcase = () => {
           onMouseLeave={() => setIsHovered(false)}
         >
           {/* Browser Frame */}
-          <div className="glass rounded-t-xl p-3 flex items-center justify-between backdrop-blur-xl">
+          <div className="glass rounded-t-lg p-3 sm:p-3 flex items-center justify-between backdrop-blur-xl overflow-hidden">
             <div className="flex items-center gap-3">
               <div className="flex gap-1.5">
                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
                 <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-md px-4 py-1 text-sm text-foreground-muted ml-4 flex items-center gap-2">
-                <Globe className="w-4 h-4" />
-                {currentProject.url}
+              <div className="bg-white/10 backdrop-blur-sm rounded-md px-3 sm:px-3 md:px-4 py-1 text-sm sm:text-sm text-foreground-muted ml-2 sm:ml-4 flex items-center gap-2 sm:gap-2 overflow-hidden">
+                <Globe className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                <span className="truncate text-sm sm:text-sm">{currentProject.url}</span>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 sm:gap-2">
               <button
                 onClick={() => setViewMode('desktop')}
-                className={`p-2 rounded-md transition-colors ${
+                className={`p-2 sm:p-2 rounded-md transition-colors min-h-[44px] flex items-center justify-center ${
                   viewMode === 'desktop' ? 'bg-violet/20 text-violet' : 'bg-white/10 text-foreground-muted hover:text-white'
                 }`}
               >
-                <Monitor className="w-5 h-5" />
+                <Monitor className="w-5 h-5 sm:w-5 sm:h-5" />
               </button>
               <button
                 onClick={() => setViewMode('mobile')}
-                className={`p-2 rounded-md transition-colors ${
+                className={`p-2 sm:p-2 rounded-md transition-colors min-h-[44px] flex items-center justify-center ${
                   viewMode === 'mobile' ? 'bg-violet/20 text-violet' : 'bg-white/10 text-foreground-muted hover:text-white'
                 }`}
               >
-                <Smartphone className="w-5 h-5" />
+                <Smartphone className="w-5 h-5 sm:w-5 sm:h-5" />
               </button>
             </div>
           </div>
 
           {/* Preview Area */}
-          <div className={`relative bg-dark-muted/50 backdrop-blur-sm rounded-b-xl overflow-hidden ${
-            viewMode === 'desktop' ? 'aspect-video' : 'aspect-[9/16] max-w-sm mx-auto'
+          <div className={`relative bg-dark-muted/50 backdrop-blur-sm rounded-b-lg overflow-hidden w-full mx-auto ${
+            viewMode === 'desktop' ? 'aspect-video' : 'aspect-[9/16] max-w-xs sm:max-w-sm mx-auto'
           }`}>
             <AnimatePresence mode="wait">
               <motion.div
@@ -409,49 +409,49 @@ const ProjectShowcase = () => {
             {/* Navigation Arrows */}
             <button
               onClick={prevProject}
-              className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 hover:bg-black/70 text-white rounded-full backdrop-blur-sm transition-all z-20"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-3 sm:p-3 bg-black/50 hover:bg-black/70 text-white rounded-full backdrop-blur-sm transition-all z-20 min-h-[44px] min-w-[44px] flex items-center justify-center"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
             <button
               onClick={nextProject}
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/50 hover:bg-black/70 text-white rounded-full backdrop-blur-sm transition-all z-20"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-3 sm:p-3 bg-black/50 hover:bg-black/70 text-white rounded-full backdrop-blur-sm transition-all z-20 min-h-[44px] min-w-[44px] flex items-center justify-center"
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
           </div>
 
           {/* Project Info */}
-          <div className="mt-8 glass rounded-2xl p-8 backdrop-blur-xl">
-            <div className="grid md:grid-cols-2 gap-8">
+          <div className="mt-4 sm:mt-6 md:mt-8 glass rounded-lg p-4 sm:p-4 md:p-6 lg:p-8 backdrop-blur-xl w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 text-center md:text-left">
               <div>
-                <h3 className="text-3xl font-bold text-white mb-2">{currentProject.title}</h3>
-                <p className="text-violet mb-4">{currentProject.category}</p>
-                <p className="text-foreground-muted mb-6">{currentProject.description}</p>
-                <div className="flex flex-wrap gap-2">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 text-center md:text-left">{currentProject.title}</h3>
+                <p className="text-sm sm:text-base text-violet mb-3 sm:mb-4 text-center md:text-left">{currentProject.category}</p>
+                <p className="text-sm sm:text-base text-foreground-muted mb-4 sm:mb-6 text-center md:text-left">{currentProject.description}</p>
+                <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                   {currentProject.technologies.map((tech) => (
-                    <span key={tech} className="px-3 py-1 bg-white/10 backdrop-blur-sm text-white rounded-full text-sm">
+                    <span key={tech} className="px-3 sm:px-3 py-1 bg-white/10 backdrop-blur-sm text-white rounded-full text-sm sm:text-sm">
                       {tech}
                     </span>
                   ))}
                 </div>
               </div>
-              <div className="flex items-center">
-                <div className="grid grid-cols-3 gap-6 w-full">
+              <div className="flex items-center justify-center mt-4 md:mt-0">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-4 md:gap-6 w-full text-center">
                   <div className="text-center">
-                    <Users className="w-8 h-8 text-violet mb-2 mx-auto" />
-                    <div className="text-2xl font-bold text-white">{currentProject.stats.visitors}</div>
-                    <div className="text-sm text-foreground-muted">{currentProject.id === 'be-hype' ? 'Générés' : 'Visiteurs'}</div>
+                    <Users className="w-6 h-6 sm:w-8 sm:h-8 text-violet mb-1 sm:mb-2 mx-auto" />
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold text-white text-center">{currentProject.stats.visitors}</div>
+                    <div className="text-sm sm:text-sm text-foreground-muted text-center">{currentProject.id === 'be-hype' ? 'Générés' : 'Visiteurs'}</div>
                   </div>
                   <div className="text-center">
-                    <TrendingUp className="w-8 h-8 text-orange mb-2 mx-auto" />
-                    <div className="text-2xl font-bold text-white">{currentProject.stats.conversion}</div>
-                    <div className="text-sm text-foreground-muted">Conversion</div>
+                    <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-orange mb-1 sm:mb-2 mx-auto" />
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold text-white text-center">{currentProject.stats.conversion}</div>
+                    <div className="text-sm sm:text-sm text-foreground-muted text-center">Conversion</div>
                   </div>
                   <div className="text-center">
-                    <Calendar className="w-8 h-8 text-violet mb-2 mx-auto" />
-                    <div className="text-2xl font-bold text-white">{currentProject.stats.launch}</div>
-                    <div className="text-sm text-foreground-muted">{currentProject.id === 'be-hype' ? 'Résultats en' : 'Lancement'}</div>
+                    <Calendar className="w-6 h-6 sm:w-8 sm:h-8 text-violet mb-1 sm:mb-2 mx-auto" />
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold text-white text-center">{currentProject.stats.launch}</div>
+                    <div className="text-sm sm:text-sm text-foreground-muted text-center">{currentProject.id === 'be-hype' ? 'Résultats en' : 'Lancement'}</div>
                   </div>
                 </div>
               </div>
@@ -459,15 +459,15 @@ const ProjectShowcase = () => {
           </div>
 
           {/* Project Dots Navigation */}
-          <div className="flex justify-center gap-2 mt-6">
+          <div className="flex justify-center gap-2 sm:gap-2 mt-4 sm:mt-6 mx-auto">
             {projects.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToProject(index)}
                 className={`transition-all ${
                   index === activeProject
-                    ? 'w-12 h-3 bg-gradient-to-r from-violet to-orange rounded-full'
-                    : 'w-3 h-3 bg-white/30 hover:bg-white/50 rounded-full'
+                    ? 'w-8 sm:w-12 h-2 sm:h-3 bg-gradient-to-r from-violet to-orange rounded-full'
+                    : 'w-2 sm:w-3 h-2 sm:h-3 bg-white/30 hover:bg-white/50 rounded-full'
                 }`}
               />
             ))}
@@ -479,22 +479,22 @@ const ProjectShowcase = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-center mt-16"
+          className="text-center mx-auto mt-8 sm:mt-12 md:mt-16 px-4"
         >
-          <h3 className="text-2xl font-bold text-white mb-4">
+          <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 text-center">
             Votre projet sera le prochain !
           </h3>
-          <p className="text-foreground-muted mb-8 max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base text-foreground-muted mb-6 sm:mb-8 max-w-2xl mx-auto px-4 sm:px-0 text-center">
             Rejoignez nos clients satisfaits et donnez vie à votre vision digitale
           </p>
           <motion.button
             onClick={openCalendly}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-violet to-orange text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
+            className="inline-flex items-center gap-2 px-6 sm:px-6 md:px-8 py-3 sm:py-3 md:py-4 bg-gradient-to-r from-violet to-orange text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all text-sm sm:text-base w-full sm:w-auto min-h-[44px] justify-center"
           >
             Démarrer mon projet
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-5 h-5 sm:w-5 sm:h-5" />
           </motion.button>
         </motion.div>
       </div>

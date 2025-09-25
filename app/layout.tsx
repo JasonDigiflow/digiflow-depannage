@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { NavigationPremium } from "@/components/NavigationPremium";
@@ -34,6 +34,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  manifest: "/manifest.json",
   openGraph: {
     title: "DIGIFLOW - Multipliez vos clients par 4. ROI x4 Garanti.",
     description: "Agence spécialisée acquisition client : Google Ads, Meta Ads, Landing Pages optimisées. ROI x4 minimum garanti ou remboursé. Disponibilités limitées.",
@@ -72,6 +73,18 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: dark)", color: "#0A0B12" },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -86,7 +99,7 @@ export default function RootLayout({
         <Preloader />
         <AnimatedCursor />
         <NavigationPremium />
-        <main className="pt-20">
+        <main className="pt-16 sm:pt-18 md:pt-20">
           {children}
         </main>
         <CalendlyProvider />

@@ -6,7 +6,7 @@ import { Calendar, Clock, CheckCircle, Star, Sparkles, Target, Zap } from "lucid
 
 export function CalendlyEmbedSection() {
   return (
-    <section className="py-20 relative overflow-hidden">
+    <section className="py-12 sm:py-16 md:py-20 relative overflow-hidden">
       {/* Background premium */}
       <div className="absolute inset-0 bg-gradient-to-br from-dark via-dark-muted/50 to-dark" />
       <div className="absolute inset-0">
@@ -28,20 +28,20 @@ export function CalendlyEmbedSection() {
             <span className="text-sm font-medium text-white/70">Réservation instantanée</span>
           </div>
           
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-heading mb-4 sm:mb-6">
             <span className="block mb-2 text-white">Réservez votre</span>
             <span className="bg-gradient-to-r from-violet via-purple-400 to-orange bg-clip-text text-transparent">
               audit gratuit
             </span>
           </h2>
           
-          <p className="text-xl md:text-2xl text-white/60 max-w-3xl mx-auto mb-8">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/60 max-w-3xl mx-auto mb-6 sm:mb-8 px-4">
             20 minutes pour analyser votre potentiel digital.
             <span className="text-white/80 font-medium"> Sans engagement, avec résultats garantis.</span>
           </p>
 
           {/* Benefits */}
-          <div className="flex flex-wrap justify-center gap-6 mb-12">
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6 mb-8 sm:mb-10 md:mb-12">
             {[
               { icon: Clock, text: "Réponse sous 24h", color: "violet" },
               { icon: CheckCircle, text: "100% gratuit", color: "green" },
@@ -54,10 +54,10 @@ export function CalendlyEmbedSection() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="flex items-center gap-2 px-4 py-2 glass rounded-full"
+                className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 glass rounded-full"
               >
-                <benefit.icon className={`w-4 h-4 text-${benefit.color}`} />
-                <span className="text-sm font-medium">{benefit.text}</span>
+                <benefit.icon className={`w-3 h-3 sm:w-4 sm:h-4 text-${benefit.color}`} />
+                <span className="text-xs sm:text-sm font-medium">{benefit.text}</span>
               </motion.div>
             ))}
           </div>
@@ -71,16 +71,16 @@ export function CalendlyEmbedSection() {
           viewport={{ once: true }}
           className="relative max-w-4xl mx-auto"
         >
-          <div className="glass rounded-premium p-8" style={{ position: 'relative', zIndex: 20 }}>
+          <div className="glass rounded-premium p-4 sm:p-6 md:p-8" style={{ position: 'relative', zIndex: 20 }}>
             
             {/* Header inside container */}
-            <div className="relative z-10 flex items-center justify-between mb-6">
+            <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-3 sm:gap-0">
               <div className="flex items-center gap-3">
-                <div className="p-3 bg-gradient-to-br from-violet/20 to-orange/20 rounded-glass">
-                  <Calendar className="w-6 h-6 text-violet" />
+                <div className="p-2 sm:p-3 bg-gradient-to-br from-violet/20 to-orange/20 rounded-glass">
+                  <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-violet" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">Choisissez votre créneau</h3>
+                  <h3 className="text-lg sm:text-xl font-bold">Choisissez votre créneau</h3>
                   <p className="text-sm text-foreground-muted">Sélectionnez le moment qui vous convient</p>
                 </div>
               </div>
@@ -93,7 +93,7 @@ export function CalendlyEmbedSection() {
 
             {/* Calendly Widget */}
             <div 
-              className="relative bg-white rounded-lg p-4" 
+              className="relative bg-white rounded-lg p-2 sm:p-3 md:p-4" 
               style={{ 
                 isolation: 'isolate',
                 pointerEvents: 'auto',
@@ -105,28 +105,28 @@ export function CalendlyEmbedSection() {
             </div>
 
             {/* Footer info */}
-            <div className="relative z-10 mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="flex items-center gap-3 p-3 glass rounded-glass">
-                <Zap className="w-5 h-5 text-violet" />
+            <div className="relative z-10 mt-4 sm:mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+              <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 glass rounded-glass">
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-violet" />
                 <div>
-                  <p className="text-sm font-semibold">Confirmation instantanée</p>
-                  <p className="text-xs text-foreground-muted">Email + SMS de rappel</p>
+                  <p className="text-xs sm:text-sm font-semibold">Confirmation instantanée</p>
+                  <p className="text-[10px] sm:text-xs text-foreground-muted">Email + SMS de rappel</p>
                 </div>
               </div>
               
-              <div className="flex items-center gap-3 p-3 glass rounded-glass">
-                <CheckCircle className="w-5 h-5 text-green-500" />
+              <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 glass rounded-glass">
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
                 <div>
-                  <p className="text-sm font-semibold">Sans engagement</p>
-                  <p className="text-xs text-foreground-muted">Annulation gratuite</p>
+                  <p className="text-xs sm:text-sm font-semibold">Sans engagement</p>
+                  <p className="text-[10px] sm:text-xs text-foreground-muted">Annulation gratuite</p>
                 </div>
               </div>
               
-              <div className="flex items-center gap-3 p-3 glass rounded-glass">
-                <Star className="w-5 h-5 text-orange" />
+              <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 glass rounded-glass">
+                <Star className="w-4 h-4 sm:w-5 sm:h-5 text-orange" />
                 <div>
-                  <p className="text-sm font-semibold">+500 audits réalisés</p>
-                  <p className="text-xs text-foreground-muted">98% de satisfaction</p>
+                  <p className="text-xs sm:text-sm font-semibold">+500 audits réalisés</p>
+                  <p className="text-[10px] sm:text-xs text-foreground-muted">98% de satisfaction</p>
                 </div>
               </div>
             </div>

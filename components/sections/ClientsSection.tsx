@@ -105,28 +105,28 @@ export function ClientsSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-20 relative overflow-hidden">
+    <section ref={sectionRef} className="py-12 px-4 sm:py-16 md:py-20 lg:py-24 relative overflow-x-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-dark to-dark-muted" />
       
       <div className="relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="clients-title text-center mb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
+          <div className="clients-title text-center mx-auto mb-6 sm:mb-8 md:mb-10 lg:mb-12">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full mb-6"
+              className="inline-flex items-center gap-2 px-4 py-2 sm:px-4 sm:py-2 glass rounded-full mb-4 sm:mb-6 mx-auto justify-center"
             >
               <div className="w-2 h-2 bg-accent-success rounded-full animate-pulse" />
-              <span className="text-sm font-semibold">+150 clients nous font confiance</span>
+              <span className="text-sm sm:text-sm font-semibold text-center">+150 clients nous font confiance</span>
             </motion.div>
 
-            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-3 sm:mb-4 text-center mx-auto">
               Ils ont choisi <span className="text-gradient">DIGIFLOW</span>
             </h2>
-            <p className="text-xl text-foreground-muted max-w-3xl mx-auto">
+            <p className="text-sm sm:text-lg md:text-xl text-foreground-muted max-w-3xl mx-auto px-4 sm:px-0 text-center">
               Des startups aux grandes entreprises, nous accompagnons des marques ambitieuses
               dans leur croissance digitale
             </p>
@@ -135,7 +135,7 @@ export function ClientsSection() {
           {/* Grille de logos principaux */}
           <div 
             ref={staticLogosRef}
-            className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-16"
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-12 md:mb-16 mx-auto justify-center"
           >
             {clients.slice(0, 12).map((client, index) => (
               <motion.div
@@ -144,7 +144,7 @@ export function ClientsSection() {
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <div className="glass rounded-glass p-6 h-24 flex items-center justify-center hover:bg-violet/5 transition-all">
+                <div className="glass rounded-lg p-4 sm:p-3 md:p-4 lg:p-6 h-16 sm:h-20 md:h-24 flex items-center justify-center hover:bg-violet/5 transition-all w-full">
                   <div className="relative w-full h-full">
                     <Image
                       src={client.logo}
@@ -160,13 +160,13 @@ export function ClientsSection() {
         </div>
 
         {/* Marquee infini pour les logos horizontaux */}
-        <div ref={marqueeRef} className="relative overflow-hidden py-8 glass">
-          <div className="marquee-content flex gap-8">
+        <div ref={marqueeRef} className="relative overflow-hidden py-4 sm:py-6 md:py-8 glass mx-auto">
+          <div className="marquee-content flex gap-4 sm:gap-6 md:gap-8 justify-center items-center">
             {/* Dupliquer les logos pour créer l'effet infini */}
             {[...clientsHorizontal, ...clientsHorizontal].map((logo, index) => (
               <div
                 key={index}
-                className="flex-shrink-0 h-16 w-40 relative"
+                className="flex-shrink-0 h-10 w-24 sm:h-14 sm:w-36 md:h-16 md:w-40 relative"
               >
                 <Image
                   src={logo}
@@ -185,7 +185,7 @@ export function ClientsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
+          className="mt-8 sm:mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-4xl mx-auto px-4"
         >
           {[
             { value: "+150", label: "Clients actifs", color: "violet" },
@@ -199,14 +199,14 @@ export function ClientsSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1, duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-center"
+              className="text-center mx-auto"
             >
-              <div className={`text-3xl font-bold mb-2 ${
+              <div className={`text-lg sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2 text-center ${
                 stat.color === "violet" ? "text-violet" : "text-orange"
               }`}>
                 {stat.value}
               </div>
-              <div className="text-sm text-foreground-muted">{stat.label}</div>
+              <div className="text-sm sm:text-sm text-foreground-muted text-center">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>
